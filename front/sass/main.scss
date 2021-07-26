@@ -1,5 +1,6 @@
 @import "./utils/variables";
 @import "./utils/functions";
+@import "./utils/keyframes";
 @import "./utils/mixins";
 
 @import "./base/base";
@@ -12,6 +13,5 @@
 @import "./layout/footer";
 @import "./layout/form";
 
-@import "./pages/connexion";
-@import "./pages/inscription";
 @import "./pages/profil";
+@import "./pages/forum";

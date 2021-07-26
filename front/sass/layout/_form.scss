@@ -1,0 +1,21 @@
+form {
+    width: 100%;
+
+        input {
+            width: 100%;
+            height: 50px;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            margin-bottom: 10px;
+        }
+
+        #submit {
+            border-bottom: none;
+            border-radius: 10px;
+
+                &:hover {
+                    background-color: grey;
+                }
+        }
+}

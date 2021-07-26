@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta title="">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Groupomania - Inscription</title>
-</head>
+    <head>
+        <meta title="">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
+        <link rel="stylesheet" href="../sass/main.css" />
+        
+        <title>Groupomania - Inscription</title>
+    </head>
 <body>
     <header>
         <div class='logo'><img id="logo" src="../img/icon-left-font-monochrome-black.svg" alt="Logo Groupomania"/></div>
@@ -16,7 +20,7 @@
         </div>
     </header>
     <main>
-        <div>Bienvenue sur Groupomania, merci de remplir le formulaire avec votre adresse mail professionnelle uniquement.</div>
+        <h1>Bienvenue sur Groupomania, merci de remplir le formulaire avec votre adresse mail professionnelle uniquement :</h1>
         <form>
             <label for='nom'>Nom</label>
             <input id='nom' type='text' name='nom' required></input><br />
@@ -24,7 +28,13 @@
             <label for='prenom'>Prénom</label>
             <input id='prenom' type='text' name='prenom' required></input><br />
 
-            <label for='mail'>Adresse mail</label>
+            <label for='birthday'>Date de naissance</label>
+            <input id='birthday' type='date' name='birthday' required></input><br />
+
+            <label for='poste'>Poste au sein de l'entreprise</label>
+            <input id='poste' type='text' name='poste' required></input><br />
+
+            <label for='mail'>Adresse mail professionnelle</label>
             <input id='mail' type='email' name='mail' required></input><br />
 
             <label for='password'>Mot de passe</label>
