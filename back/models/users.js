@@ -1,5 +1,7 @@
 'use strict';
-const Model = require('sequelize');
+const {  Model } = require('sequelize');
+// const { Sequelize, DataTypes, Model } = require('sequelize');
+// const sequelize = new Sequelize('sqlite::memory:');
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
     /**
@@ -18,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     bio: DataTypes.STRING,
+    imgprofile: DataTypes.STRING,
     isAdmin: DataTypes.BOOLEAN
   }, {
     sequelize,

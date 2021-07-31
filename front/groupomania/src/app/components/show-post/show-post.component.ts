@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Post } from 'src/app/models/post';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-show-post',
@@ -8,23 +8,23 @@ import { Post } from 'src/app/models/post';
 })
 export class ShowPostComponent implements OnInit {
 
-  @Input() posts!: Post[];
-  postOpen = false;
 
-  constructor() { }
+  constructor(private postService : PostService) { }
 
   ngOnInit(): void {
   }
 
-  onEdit(post : Post):void {
-    this.postOpen = true;
-  }
-
-  onDelete(post: Post): void {
+  createPost():void {
     
   }
 
-  addPost():void {
-    this.postOpen = true;
+  onEdit():void {
+
   }
+
+  onDelete(): void {
+    
+  }
+
+
 }

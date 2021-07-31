@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PostService } from 'src/app/services/post.service';
 import { Response } from '../../models/response';
 
 @Component({
@@ -9,20 +8,15 @@ import { Response } from '../../models/response';
 })
 export class HomeComponent implements OnInit {
 
+  status: string;
+
   posts: any;
   postSub: any;
+  authUser: boolean=false;
 
-  constructor(private postServices: PostService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.postSub = this.postServices.getPost().subscribe(
-      (response: Response) => {
-        this.posts = response.result;
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
-  }
 
+  }
 }

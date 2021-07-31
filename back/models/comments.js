@@ -1,5 +1,6 @@
 'use strict';
-const Model = require('sequelize');
+const { Sequelize, DataTypes, Model } = require('sequelize');
+const sequelize = new Sequelize('sqlite::memory:');
 module.exports = (sequelize, DataTypes) => {
   class Comments extends Model {
     /**

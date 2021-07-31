@@ -1,7 +1,4 @@
-export interface Post {
-    idMessage: number;
-    idUSERS: number;
+export interface createMessage {
     content: string,
     attachment: string,
-    likes: string
 }

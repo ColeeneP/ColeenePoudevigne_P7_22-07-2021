@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Post } from '../../models/post';
+import { Router } from '@angular/router';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-add-or-edit-post',
@@ -9,21 +10,31 @@ import { Post } from '../../models/post';
 })
 export class AddOrEditPostComponent implements OnInit {
 
-  @Input() post!: Post;
-  postForm!: FormGroup;
+  createPost: FormGroup;
+  responseServer = null;
 
-  constructor(private formBuilder: FormBuilder) { 
-    this.postForm = formBuilder.group({
-      contentPost: formBuilder.group({
-        content: ['', Validators.required]
-      }),
-      attachmentPost: formBuilder.group({
-        attachment: ['']
-      })
+  constructor(private formBuilder: FormBuilder,
+              private postService: PostService,
+              private router: Router) {}
+
+  ngOnInit(): void {
+    this.createPost = this.formBuilder.group({
+      content: this.formBuilder.control('', [Validators.required, Validators.minLength(10), Validators.maxLength(255)]),
+      attachment: this.formBuilder.control('')
     })
   }
 
-  ngOnInit(): void {
-  }
+  onSubmit(): void {
+    const formPost = {
+      content: this.createPost.get('content').value,
+      attachment: this.createPost.get('attachment').value
+    }
+    this.postService.createMessage(formPost).subscribe(
+      result =>
+        sessionStorage[`session`] = JSON.stringify(result),
+        this.router.navigate['addOrEditComponent']),
+        error =>
+          this.responseServer = error.error.message
+    }
 
 }

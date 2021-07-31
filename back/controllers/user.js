@@ -1,27 +1,27 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/users');
+const Model = require('../models/');
 
 // controller de création de compte
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10) // hash du mdp
       .then(hash => {
-        const user = User.create ({
+        const user = {
           firstname: req.body.firstname,
           name: req.body.name,
           email: req.body.email,
           password: hash // On récupère le hash créé et on créé un user avec ce hash
-        });
-        user.save() // On enregistre le user dans la BDD
+        }; console.log(user);
+        Model.Users.create(user) // On enregistre le user dans la BDD
           .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
           .catch(error => res.status(400).json({ error }));
       })
-      .catch(error => res.status(500).json({ error }));
+      .catch(error => res.status(500).json({ message: error.message }));
   };
 
 // controller de connexion à un compte existant
   exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email }) // On cherche dans la BDD le user correspondant à l'email (unique)
+    Model.Users.findOne({ email: req.body.email }) // On cherche dans la BDD le user correspondant à l'email (unique)
       .then(user => {
         if (!user) {
           return res.status(401).json({ error: 'Utilisateur non trouvé !' }); // si aucun mail correspondant n'existe
@@ -47,7 +47,7 @@ exports.signup = (req, res, next) => {
 
 // controller d'accès à un profil
   exports.getOneUser = (req, res, next) => {
-    User.findOne({
+    Model.Users.findOne({
       _id: req.params.id
     }).then(
       (thing) => {res.status(200).json(thing);}

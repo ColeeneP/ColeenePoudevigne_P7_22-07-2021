@@ -10,7 +10,7 @@ const accountLimiter = rateLimit ({
         "Trop de requêtes envoyées depuis cette IP"
 });
 
-router.post('/signup', accountLimiter, userCtrl.signup);
+router.post('/signup', userCtrl.signup);
 router.post('/login', accountLimiter, userCtrl.login);
 
 module.exports = router;

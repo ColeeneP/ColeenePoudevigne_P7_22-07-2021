@@ -1,20 +1,20 @@
 <h1>Bienvenue sur Groupomania, merci de remplir le formulaire avec votre adresse mail professionnelle uniquement :</h1>
         <form id="form" [formGroup]="registerForm">
-            <div formGroupName="registerGroup">
+            <div class="formGroup">
                 <label for='name'>Nom</label>
                 <input id='name' type='text' name='name' class='form-control' formControlName="name" required><br />
             </div>
-            <div formGroupName="registerGroup">
+            <div class="formGroup">
                 <label for='firstname'>Prénom</label>
                 <input id='firstname' type='text' name='firstname' class='form-control' formControlName="firstname" required><br /> 
             </div>
-            <div formGroupName="registerGroup">
+            <div class="formGroup">
                 <label for='email'>Adresse mail professionnelle</label>
                 <input id='email' type='email' name='email' class='form-control' formControlName="email" required><br />
             </div>
-            <div formGroupName="registerGroup">
+            <div class="formGroup">
                 <label for='password'>Mot de passe</label>
                 <input id='password' type='password' name='password' class='form-control' formControlName ="password" required><br />
             </div>
-            <button type="submit" (click)="onRegister"></button>
+            <button id='submit' type="submit" (click)="onRegister()">S'inscrire</button>
         </form>

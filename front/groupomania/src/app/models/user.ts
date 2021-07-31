@@ -1,9 +1,11 @@
-export interface User {
+export interface newUser {
     firstname: string,
     name: string,
     email: string,
     password: string,
-    bio: string,
-    imgprofile: string,
-    isAdmin: boolean
+}
+
+export interface logUser {
+    email: string,
+    password: string,
 }

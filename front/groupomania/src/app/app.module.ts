@@ -8,7 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { DeletePostComponent } from './components/delete-post/delete-post.component';
 import { AddOrEditPostComponent } from './components/add-or-edit-post/add-or-edit-post.component';
 import { ShowPostComponent } from './components/show-post/show-post.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ShowProfileComponent } from './components/show-profile/show-profile.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { LoginComponent } from './components/auth/login/login.component';
@@ -24,7 +24,7 @@ import { HeaderComponent } from './components/header/header.component';
     ShowProfileComponent,
     RegisterComponent,
     LoginComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

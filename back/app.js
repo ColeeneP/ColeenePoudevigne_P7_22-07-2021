@@ -6,6 +6,7 @@ const path = require('path');
 const helmet = require('helmet'); // middleware tier d'express pour la sécurisation
 const dotenv = require('dotenv').config(); // fait appel à dotenv pour sécurisé la connexion à la BDD
 const mongoSanitize = require('express-mongo-sanitize'); // middleware de prévention contre les injections opérateur
+const db = require("./models");
 
 const express = require('express');
 const app = express();
