@@ -21,18 +21,12 @@
     </header>
     <main>
         <h1>Bienvenue sur Groupomania, merci de remplir le formulaire avec votre adresse mail professionnelle uniquement :</h1>
-        <form>
+        <form id="form">
             <label for='nom'>Nom</label>
             <input id='nom' type='text' name='nom' required></input><br />
 
             <label for='prenom'>Prénom</label>
             <input id='prenom' type='text' name='prenom' required></input><br />
-
-            <label for='birthday'>Date de naissance</label>
-            <input id='birthday' type='date' name='birthday' required></input><br />
-
-            <label for='poste'>Poste au sein de l'entreprise</label>
-            <input id='poste' type='text' name='poste' required></input><br />
 
             <label for='mail'>Adresse mail professionnelle</label>
             <input id='mail' type='email' name='mail' required></input><br />
@@ -41,11 +35,12 @@
             <input id='password' type='password' name='password' required></input><br />
 
             <label for='submit'></label>
-            <input id='submit' type='button' name='submit' value='Inscription'></input>
+            <input id='submit' type='submit' name='submit' value='Inscription'></input>
         </form>
     </main>
     <footer>
 
     </footer>
+    <script src="../js/inscription.js" async></script>
 </body>
 </html>

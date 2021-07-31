@@ -1,0 +1,11 @@
+<form class="newPost">
+    <div formGroupName='contentPost'>
+        <label for="content"></label>
+        <textarea id='content' type='text' formControlName='content' required></textarea>
+    </div>    
+    <div formGroupName='attachmentPost'>
+        <label for="attachement"></label>
+        <input id='attachement' type='file' formControlName='attachment'>
+    </div>    
+<button type='submit'>Publier</button>    
+</form>

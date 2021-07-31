@@ -1,0 +1,12 @@
+<app-add-or-edit-post></app-add-or-edit-post>
+
+<section class="post" *ngFor="let post of posts">
+    <div class="contenu">
+        <img src='../../../assets/img/user test.png' alt="photo de profil du publicateur"/>
+        <p>{{post.content}}</p>   
+    </div>
+    <div class="interaction">
+        <div class="comment"><i class="fas fa-reply"></i></div>
+        <div class="like"><i class="fas fa-heart"></i></div>
+    </div>
+</section>

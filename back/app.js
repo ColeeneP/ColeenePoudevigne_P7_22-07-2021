@@ -1,5 +1,6 @@
 const mysql = require ('mysql');
-const { Sequelize } = require('sequelize');
+const cors = require('cors');
+const Sequelize = require('sequelize');
 const bodyParser = require('body-parser');
 const path = require('path');
 const helmet = require('helmet'); // middleware tier d'express pour la sécurisation
@@ -14,14 +15,17 @@ const messageRoutes = require('./routes/message');
 const commentRoutes = require('./routes/comment');
 
 // connexion BDD
-const connection = mysql.createConnection ({
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_MDP, {
   host: 'localhost',
-  user: 'utilisateur',
-  password: 'mot de passe',
-  database: 'groupomania'
+  port: 3306,
+  dialect: 'mysql',
+  loggin: false
 });
 
-connection.connect ((err) => {
+module.exports = sequelize;
+global.sequelize = sequelize;
+
+sequelize.authenticate ((err) => {
   if (err) throw err;
   console.log ('Connecté!');
 });
@@ -33,7 +37,7 @@ app.use((req, res, next) => {
   next();
 });
 
-
+app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(mongoSanitize()); // Clear user data
@@ -41,6 +45,7 @@ app.use(mongoSanitize()); // Clear user data
 
 // Appel des routers
 app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use('/api/auth', userRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/message', messageRoutes);
 
 module.exports = app;

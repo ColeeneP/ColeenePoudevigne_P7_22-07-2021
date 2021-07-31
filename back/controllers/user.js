@@ -1,12 +1,12 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const User = require('../models/users');
 
 // controller de création de compte
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10) // hash du mdp
       .then(hash => {
-        const user = new User({
+        const user = User.create ({
           firstname: req.body.firstname,
           name: req.body.name,
           email: req.body.email,
