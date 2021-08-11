@@ -1,0 +1,23 @@
+<form [formGroup]="modifyForm">
+    <h1>Modifications du compte</h1>
+    <div class="imgProfile">
+        <label for="file" class="label-file"></label>
+        <img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'" class='imgProfile'> 
+        <input id="file" type="file" class="input-file" (change)="onSelectFile($event)">
+        <button *ngIf="url" (click)="delete()" >Supprimer image</button>
+    </div>  
+    <div class="form-group"> 
+        <label for="name">Nom : </label>
+        <input type="text" class="form-control" id="name" formControlName="name">
+    </div>
+    <div class="form-group">
+        <label for="lastname">Prénom : </label>
+        <input type="text" class="form-control" id="firstname" formControlName="firstname"> 
+    </div>
+    <div class="form-group">
+        <label for="email">Email :</label>
+        <input type ="email" class="form-control" id="email" formControlName="email">
+    </div>
+   
+    <button (click)="onModifyProfil" routerLink="/showProfileComponent">Valider</button>
+</form>

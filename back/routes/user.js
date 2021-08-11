@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userCtrl = require('../controllers/user');
+const auth = require('../middleware/auth');
 const rateLimit = require('express-rate-limit'); // middleware contre les attaques de force brute
 
 const accountLimiter = rateLimit ({
@@ -12,5 +13,7 @@ const accountLimiter = rateLimit ({
 
 router.post('/signup', userCtrl.signup);
 router.post('/login', accountLimiter, userCtrl.login);
+router.get('/getOneUser', userCtrl.getOneUser);
+// router.put('/modifyUser',  userCtrl.modifyUser);
 
 module.exports = router;

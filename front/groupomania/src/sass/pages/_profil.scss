@@ -1,6 +1,28 @@
 .presentation {
+    display: flex;
     text-align: center;
     border: 2px solid $first_color;
     border-radius: 10px;
     padding-bottom: 20px;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    .imgProfile {
+        width: 200px;
+        align-items: left;
+        border-radius: 50%;
+        padding: 20px 20px 20px 20px;
+    }
+
+    .identite {
+        display: block;
+        align-self: center;
+        width: 50%;
+    }
+
+    button {
+        align-items: center;
+        flex-grow: 2;
+    }
 }
+

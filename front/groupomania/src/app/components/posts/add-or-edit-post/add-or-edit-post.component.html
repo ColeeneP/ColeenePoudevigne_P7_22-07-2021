@@ -1,0 +1,17 @@
+<div class="post">
+    <h2>Quoi de neuf ?</h2>
+<form class="newPost" [formGroup]="createPost">
+    <div class='form-control'>
+        <label for="content"></label>
+        <textarea id='content' type='text' formControlName='content' required></textarea>
+    </div>    
+    <div class='form-control'>
+        <label for="attachement"></label>
+        <input type="file" accept="image/*" #imageInput formControlName='attachment' (change)="onFileAdded($event)" />
+        <button (click)="imageInput.click()">Ajouter une image</button>
+        <img [src]="imagePreview" *ngIf="imagePreview" />
+    </div>    
+    <button id='submit' type="submit" (click)="onSubmit()">Publier</button>   
+</form>
+</div>
+<app-show-post></app-show-post>

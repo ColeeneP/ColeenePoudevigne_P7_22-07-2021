@@ -1,8 +1,10 @@
-<div class='logo'><img id="logo" src="../assets/img/icon-left-font-monochrome-black.svg" alt="Logo Groupomania"/></div>
+<header>
+<div class='logo'><img id="logo" src="../assets/img/icon-left-font.svg" alt="Logo Groupomania"/></div>
 <div class="nav">
-    <div ><a routerLink='registerComponent'>Inscription</a></div>
-    <div ><a routerLink='loginComponent'>Connexion</a></div>
-    <div ><a routerLink='/profile'><i class="fas fa-user"></i></a></div>
-    <div ><a routerLink='addOrEditComponent'><i class="fas fa-comments"></i></a></div>
-    <div ><a routerLink='loginComponent'><i class="fas fa-sign-out-alt" (click)='onLogout()'></i></a></div>
+    <div ><a routerLink='registerComponent' *ngIf='!auth'>Inscription</a></div>
+    <div ><a routerLink='loginComponent' *ngIf='!auth'>Connexion</a></div>
+    <div ><a routerLink='showProfileComponent' *ngIf='auth'><i class="fas fa-user"></i></a></div>
+    <div ><a routerLink='addOrEditComponent' *ngIf='auth'><i class="fas fa-comments"></i></a></div>
+    <div ><a routerLink='loginComponent' *ngIf='auth'><i class="fas fa-sign-out-alt" (click)='onLogout()'></i></a></div>
 </div>
+</header>

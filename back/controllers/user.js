@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Model = require('../models/');
+const auth = require("../middleware/auth.js");
 
 // controller de création de compte
 exports.signup = (req, res, next) => {
@@ -21,8 +22,9 @@ exports.signup = (req, res, next) => {
 
 // controller de connexion à un compte existant
   exports.login = (req, res, next) => {
-    Model.Users.findOne({ email: req.body.email }) // On cherche dans la BDD le user correspondant à l'email (unique)
+    Model.Users.findOne({  where : { email: req.body.email } }) // On cherche dans la BDD le user correspondant à l'email (unique)
       .then(user => {
+        console.log(user);
         if (!user) {
           return res.status(401).json({ error: 'Utilisateur non trouvé !' }); // si aucun mail correspondant n'existe
         }
@@ -32,11 +34,12 @@ exports.signup = (req, res, next) => {
               return res.status(401).json({ error: 'Mot de passe incorrect !' }); // si mdp incorrect
             }
             res.status(200).json({
-              userId: user._id,
+              userId: user.id,
+              isAdmin: user.isAdmin,
               token: jwt.sign(
-                { userId: user._id }, // argument à encoder, permettra de sécuriser la création, modification et suppression d'objets
+                { userId: user.id }, // argument à encoder, permettra de sécuriser la création, modification et suppression d'objets
                 '56391random2581secret9851key', // attribution d'un token d'authentification
-                { expiresIn: '2h' } // expiration du token
+                { expiresIn: '2h' }, // expiration du token
               )
             });
           })
@@ -46,23 +49,41 @@ exports.signup = (req, res, next) => {
   };
 
 // controller d'accès à un profil
-  exports.getOneUser = (req, res, next) => {
+  exports.getOneUser = (req, res) => {
+    const headerAuth = ['authorization'];
+    console.log(headerAuth);
+    const userId = auth.getUserId(headerAuth);
     Model.Users.findOne({
-      _id: req.params.id
-    }).then(
-      (thing) => {res.status(200).json(thing);}
+      attributes: ['name', 'firstname',  'email', 'password', 'bio', 'imgprofile'],
+      where: {id: userId}
+    })
+    .then(
+      (response) => {res.status(200).json([response]);}
     ).catch(
-      (error) => { res.status(404).json({ error: error });}
-    );
+      (error) => { res.status(404).json({ error });}
+    )
   };
 
 // controller de modification d'un profil
 exports.modifyUser = (req, res, next) => {
-    const sauceObject = req.file ? {
+    const userObject = req.file ? {
       ...JSON.parse(req.body.user),
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`} : {...req.body };
 
-      User.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-      .then(() => res.status(200).json({ message: 'Objet modifié !'}))
+      User.update({ userId: req.params.id }, { ...req.body, userId: req.params.id })
+      .then(() => res.status(200).json({ message: 'Utilisateur modifié !'}))
       .catch(error => res.status(400).json({ error }));
+  };
+
+  exports.deleteUser = (req, res, next) => {
+    Model.Users.findOne({ _id: req.params.id })
+      .then(thing => {
+        const filename = thing.imageUrl.split('/images/')[1];
+        fs.unlink(`images/${filename}`, () => {
+          Model.Users.destroy({ _id: req.params.id })
+            .then(() => res.status(200).json({ message: 'Utilisateur supprimé !'}))
+            .catch(error => res.status(400).json({ error }));
+        });
+      })
+      .catch(error => res.status(500).json({ error }));
   };

@@ -5,20 +5,20 @@ USE Groupomania;
 DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    firstname VARCHAR(255),
-    name VARCHAR(255),
-    email VARCHAR(255),
-    password VARCHAR(255),
+    firstname VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     bio VARCHAR(255),
-    imgprofile VARBINARY(255),
+    imgprofile VARCHAR(255) DEFAULT 'https://www.w3schools.com/w3images/avatar6.png',
     isAdmin TINYINT(1)
 ) ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS Comments;
 CREATE TABLE Comments (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    idUSERS INT,
-    content VARCHAR(255),
+    idUSERS INT NOT NULL FOREIGN KEY FK_idUSERS REFERENCES Users(id),
+    content VARCHAR(255) NOT NULL,
     attachment VARCHAR(255),
     likes INT
 ) ENGINE = InnoDB;
@@ -26,8 +26,8 @@ CREATE TABLE Comments (
 DROP TABLE IF EXISTS Messages;
 CREATE TABLE Messages (
    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-   idMESSAGES INT,
-   idUSERS INT,
-   content VARCHAR(255),
+   idMESSAGES INT NOT NULL FOREIGN KEY FK_idMESSAGES REFERENCES Messages(id),
+   idUSERS INT NOT NULL FOREIGN KEY FK_idUSERS_comments REFERENCES Users(id),
+   content VARCHAR(255) NOT NULL,
    likes INT
 ) ENGINE = InnoDB;

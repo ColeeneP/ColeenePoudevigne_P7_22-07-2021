@@ -1,0 +1,13 @@
+
+<h2>Les derniers potins :</h2>
+<!-- *ngFor="let messages of messages"  -->
+<section class="post" >
+    <div class="contenu">
+        <img src='../../../assets/img/user test.png' alt="photo de profil du publicateur"/>
+        <p></p>   
+    </div>
+    <div class="interaction">
+        <div class="comment"><i class="fas fa-reply"></i></div>
+        <div class="like"><i [ngClass]="{ 'fas fa-heart': liked }"></i></div>
+    </div>
+</section>

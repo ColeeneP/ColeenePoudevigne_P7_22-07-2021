@@ -6,7 +6,6 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
@@ -32,8 +31,7 @@ export class LoginComponent implements OnInit {
     }
     this.userService.logUser(formOnLogin).subscribe(
       result =>
-        sessionStorage[`session`] = JSON.stringify(result),
-        this.router.navigate['addOrEditComponent']),
+        sessionStorage[`session`] = JSON.stringify(result)),
         error =>
           this.responseServer = error.error.message
     }
