@@ -11,7 +11,6 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   private apiUrl = environment.api;
-  private authToken: string;
   
   constructor(private httpClient: HttpClient,
               private router: Router) { }
@@ -22,15 +21,6 @@ export class UserService {
 
   logUser(loginRequest: logUser) {
     return this.httpClient.post(`${this.apiUrl}/user/login`, loginRequest);
-  }
-
-  getToken() {
-    return this.authToken;
-  }
-
-  logout() {
-    this.authToken = null;
-    this.router.navigate(['login']);
   }
 
   getOneProfil(): Observable<any> {

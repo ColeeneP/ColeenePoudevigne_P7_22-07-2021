@@ -4,15 +4,19 @@ const decodedToken = require("../middleware/auth.js");
 
 
 // Création d'un message
-exports.createMessage = (req, res, next) => {
-    const messageObject = req.body;
-    console.log(req.body);
+exports.createMessage = (req, res) => {
+    const userId = Number(req.user.userId);
     const message = ({
-      userId: req.body.userId,
+      idUSERS: userId,
       content: req.body.content,
       attachment: req.body.content && req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}`: null,
     });
-      Model.Messages.create(message).then(
+    console.log(message);
+      Model.Messages.create({
+        idUSERS: userId,
+        content: req.body.content,
+        attachment: message.attachment
+      }).then(
         () => {
           res.status(201).json({ message: 'Message créé !' }); }
       ).catch(
@@ -22,9 +26,12 @@ exports.createMessage = (req, res, next) => {
     };
 
 // Afficher tous les messages
-exports.getAllMessages = (req, res, next) => {
-    Model.Message.find()
-    .then((things) => {res.status(200).json(things);
+exports.getAllMessages = (req, res) => {
+    Model.Messages.findAll({
+      attributes: ['content', 'attachment', 'likes']})
+    .then((things) => {
+      console.log(things);
+      res.status(200).json(things);
     })
     .catch((error) => {res.status(400).json({error: error});
     });

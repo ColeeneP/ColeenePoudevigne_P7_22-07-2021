@@ -1,10 +1,10 @@
 
 <h2>Les derniers potins :</h2>
-<!-- *ngFor="let messages of messages"  -->
-<section class="post" >
+<section class="post" *ngFor="let message of allMessages">
     <div class="contenu">
         <img src='../../../assets/img/user test.png' alt="photo de profil du publicateur"/>
-        <p></p>   
+        <div class="content">{{ message.content }}</div>
+        <div class="attachment">{{ message.attachment }}</div>   
     </div>
     <div class="interaction">
         <div class="comment"><i class="fas fa-reply"></i></div>

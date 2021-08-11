@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Model = require('../models/');
-const auth = require("../middleware/auth.js");
+const decodedToken = require("../middleware/auth.js");
 
 // controller de création de compte
 exports.signup = (req, res, next) => {
@@ -50,15 +50,16 @@ exports.signup = (req, res, next) => {
 
 // controller d'accès à un profil
   exports.getOneUser = (req, res) => {
-    const headerAuth = ['authorization'];
-    console.log(headerAuth);
-    const userId = auth.getUserId(headerAuth);
+    const userId = Number(req.user.userId);
+    console.log(req.headers);
+    console.log(userId);
     Model.Users.findOne({
       attributes: ['name', 'firstname',  'email', 'password', 'bio', 'imgprofile'],
       where: {id: userId}
     })
     .then(
-      (response) => {res.status(200).json([response]);}
+      (response) => {res.status(200).json(response)
+        console.log(response);}
     ).catch(
       (error) => { res.status(404).json({ error });}
     )

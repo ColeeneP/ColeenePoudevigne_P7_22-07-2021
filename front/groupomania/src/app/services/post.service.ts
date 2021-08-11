@@ -24,7 +24,7 @@ export class PostService {
   }
 
   getMessage(): Observable<any>{
-    return this.http.get(this.apiUrl);
+    return this.http.get(`${this.apiUrl}/message/getAllMessages`);
   }
 
   likePost(id: string, like: boolean) {

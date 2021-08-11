@@ -9,7 +9,7 @@ export class AuthInterceptor implements HttpInterceptor {
       const authToken = JSON.parse(sessionStorage.getItem('session')).token;
       this.newRequest = req.clone({
       withCredentials: false ,
-      headers: req.headers.set('authorization', authToken)
+      headers: req.headers.set('authorization', 'Bearer ' + authToken)
       });
     }else{
       this.newRequest = req.clone();

@@ -13,7 +13,7 @@ const accountLimiter = rateLimit ({
 
 router.post('/signup', userCtrl.signup);
 router.post('/login', accountLimiter, userCtrl.login);
-router.get('/getOneUser', userCtrl.getOneUser);
+router.get('/getOneUser', auth, userCtrl.getOneUser);
 // router.put('/modifyUser',  userCtrl.modifyUser);
 
 module.exports = router;
