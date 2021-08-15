@@ -16,6 +16,9 @@ const messageRoutes = require('./routes/message');
 const commentRoutes = require('./routes/comment');
 
 // connexion BDD
+
+db.sequelize.sync();
+
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_MDP, {
   host: 'localhost',
   port: 3306,
@@ -48,5 +51,6 @@ app.use(mongoSanitize()); // Clear user data
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/user', userRoutes);
 app.use('/api/message', messageRoutes);
+app.use('/api/comment', commentRoutes);
 
 module.exports = app;

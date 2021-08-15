@@ -24,8 +24,7 @@ export class ShowProfileComponent implements OnInit {
   getProfil(){
       this.userService.getOneProfil().subscribe(response => {
       this.profil = response,
-      console.log(this.profil)})
-      
+      console.log(this.profil)}) 
   }
 
 }

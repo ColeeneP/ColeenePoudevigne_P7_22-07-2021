@@ -6,9 +6,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { DeletePostComponent } from './components/posts/delete-post/delete-post.component';
-import { AddOrEditPostComponent } from './components/posts/add-or-edit-post/add-or-edit-post.component';
 import { ShowPostComponent } from './components/posts/show-post/show-post.component';
+import { DeletePostComponent } from './components/posts/delete-post/delete-post.component';
+import { AddPostComponent } from './components/posts/add-post/add-post.component';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ShowProfileComponent } from './components/profile/show-profile/show-profile.component';
 import { RegisterComponent } from './components/auth/register/register.component';
@@ -17,10 +17,13 @@ import { HeaderComponent } from './components/header/header.component';
 import { ModifyProfileComponent } from './components/profile/modify-profile/modify-profile.component';
 import { LikePostComponent } from './components/posts/like-post/like-post.component';
 import { LikeCommentComponent } from './components/comments/like-comment/like-comment.component';
-import { AddOrEditCommentComponent } from './components/comments/add-or-edit-comment/add-or-edit-comment.component';
 import { DeleteCommentComponent } from './components/comments/delete-comment/delete-comment.component';
 import { DeleteProfileComponent } from './components/profile/delete-profile/delete-profile.component';
 import { AuthInterceptor } from './auth-interceptor';
+import { ModifyCommentComponent } from './components/comments/modify-comment/modify-comment.component';
+import { AddCommentComponent } from './components/comments/add-comment/add-comment.component';
+import { ModifyPostComponent } from './components/posts/modify-post/modify-post.component';
+
 
 
 @NgModule({
@@ -28,7 +31,7 @@ import { AuthInterceptor } from './auth-interceptor';
     AppComponent,
     HomeComponent,
     DeletePostComponent,
-    AddOrEditPostComponent,
+    AddPostComponent,
     ShowPostComponent,
     ShowProfileComponent,
     RegisterComponent,
@@ -37,9 +40,12 @@ import { AuthInterceptor } from './auth-interceptor';
     ModifyProfileComponent,
     LikePostComponent,
     LikeCommentComponent,
-    AddOrEditCommentComponent,
     DeleteCommentComponent,
     DeleteProfileComponent,
+    ModifyCommentComponent,
+    AddCommentComponent,
+    AddPostComponent,
+    ModifyPostComponent,
   ],
   imports: [
     BrowserModule,

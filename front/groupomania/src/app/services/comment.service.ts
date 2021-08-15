@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { createMessage } from '../models/post';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PostService {
+export class CommentService {
 
   private apiUrl = environment.api;
   private authToken: string;
@@ -16,34 +15,35 @@ export class PostService {
   constructor(private http: HttpClient) { }
 
 
-  createMessage(content: string, attachment: File):Observable<any>{
+  createComment(idMessage: string, content: string, attachment: File):Observable<any>{
     let formData = new FormData();  
+      formData.append('idMessage', idMessage)
       formData.append('content', content);
       formData.append('attachment', attachment);
-    return this.http.post(`${this.apiUrl}/message/createMessage`, formData);
+    return this.http.post(`${this.apiUrl}/comment/createComment`, formData);
   }
 
-  getAllMessages(): Observable<any>{
-    return this.http.get(`${this.apiUrl}/message/getAllMessages`);
-  }
-  
-  getOneMessage(id: string): Observable<any>{
-    return this.http.get(`${this.apiUrl}/message/getOneMessage/` + id);
+  getAllComments(): Observable<any>{
+    return this.http.get(`${this.apiUrl}/comment/getAllComments`);
   }
 
-  modifyMessage(id: string, content: string, attachment: File): Observable<any>{
+  getOneComment(id: string): Observable<any>{
+    return this.http.get(`${this.apiUrl}/comment/getOneComment/` + id);
+  }
+
+  modifyComment(id: string, content: string, attachment: File): Observable<any>{
     let formData = new FormData();  
-    formData.append('idPost', id);
+    formData.append('idComment', id);
     formData.append('content', content);
     formData.append('attachment', attachment);
-    return this.http.put(`${this.apiUrl}/message/modifyMessage/` + id, formData);
+    return this.http.put(`${this.apiUrl}/comment/modifyComment/` + id, formData);
   }
 
-  deleteMessage(id: string): Observable<any>{
-    return this.http.delete(`${this.apiUrl}/message/deleteMessage/` + id);
+  deleteComment(id: string): Observable<any>{
+    return this.http.delete(`${this.apiUrl}/comment/deleteComment/` + id);
   }
 
-  likePost(id: string, like: boolean) {
+  likeComment(id: string, like: boolean) {
     return new Promise((resolve, reject) => {
       this.http.post(
         'http://localhost:3000/api/message' + id + '/like',

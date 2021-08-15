@@ -1,0 +1,16 @@
+<div class="comment">
+<form class="newComment" [formGroup]="createComment">
+    <div class='form-control'>
+        <img [src]="profil.imgprofile" alt="user img" class='imgProfile' /> 
+        <label for="content"></label>
+        <textarea id='content' placeholder="Ajouter un commentaire" type='text' formControlName='content' required></textarea>
+    </div>    
+    <div class='form-control'>
+        <label for="attachement"></label>
+        <input type="file" accept="image/*" #imageInput (change)="onFileAdded($event)">
+        <button (click)="imageInput.click()">Ajouter une image</button>
+        <img [src]="imagePreview" *ngIf="imagePreview" class="apercuImage">
+    </div>    
+    <div class='form-control'><button id='submit' type="submit" (click)="onSubmit()">Publier</button></div>   
+</form>
+</div>

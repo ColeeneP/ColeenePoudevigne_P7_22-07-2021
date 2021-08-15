@@ -1,26 +1,42 @@
-h1 {
+h2 {
     text-align: left;
+    color: white;
 }
 
 .post {
-    margin: auto;
-    width: 60%;
-    border: 2px solid $first_color;
+    margin: 20px auto 0px auto;
+    width: 100%;
+    border: 2px solid white;
+    background-color: rgb(104, 104, 104);
     border-radius: 10px;
     padding: 10px;
+    color: white;
 
     .contenu {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
 
             img {
                 width: 50px;
                 height: 50px;
+                border-radius: 50%;
             }
+    }
 
-            p {
+    .userIdentity {
+        display: flex;
+        flex-flow: row wrap;
+
+            .userName {
+                align-self: flex-start;
                 margin-left: 20px;
             }
+    }
+
+    .content {
+        width: 100%;
+        text-align: center;
+        margin: 20px 0px 0px 0px;
     }
 
     .interaction {
@@ -31,12 +47,71 @@ h1 {
             div {
                 padding: 0px 10px 0px 10px;
 
-                .fa-heart {
-                    color: black;
-                    font-size: 1.3em;
+                .fa-heart, .fa-reply, .fa-trash-alt, .fa-edit {
+                    color: white;
 
-                    &:before {
-                        content: "\f004";
+                    &:before {                    
+                        transition: color 0.5s ease-out;
+                    }
+
+                    &:hover:before{
+                        color: $second_color;
+                        font-weight: bold;
+                        cursor: pointer;
+                    }
+                }
+            }
+    }
+}
+
+.comment {
+    margin: 5px 0px 20px 20px;
+    width: 40%;
+    border: 2px solid $first_color;
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+
+    .contenu {
+        display: flex;
+        flex-direction: column;
+
+            img {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+    }
+
+    .userIdentity {
+        display: flex;
+        flex-flow: row wrap;
+
+            .userName {
+                align-self: flex-start;
+                margin-left: 20px;
+            }
+    }
+
+    .content {
+        width: 100%;
+        text-align: center;
+        margin: 20px 0px 0px 0px;
+    }
+
+    .interaction {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+
+            div {
+                padding: 0px 10px 0px 10px;
+
+                .fa-heart, .fa-reply, .fa-trash-alt, .fa-edit {
+                    color: white;
+                    
+
+                    &:before {                    
                         transition: color 0.5s ease-out;
                     }
 

@@ -5,11 +5,12 @@ const decodedToken = require("../middleware/auth.js");
 
 // Création d'un message
 exports.createMessage = (req, res) => {
+  console.log('ici' + req.file)
     const userId = Number(req.user.userId);
     const message = ({
       idUSERS: userId,
       content: req.body.content,
-      attachment: req.body.content && req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}`: null,
+      attachment: req.body.attachment && req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}`: null,
     });
     console.log(message);
       Model.Messages.create({
@@ -28,7 +29,20 @@ exports.createMessage = (req, res) => {
 // Afficher tous les messages
 exports.getAllMessages = (req, res) => {
     Model.Messages.findAll({
-      attributes: ['content', 'attachment', 'likes']})
+      attributes: ['id', 'idUSERS', 'content', 'attachment', 'likes']})
+    .then((things) => {
+      console.log(things);
+      res.status(200).json(things);
+    })
+    .catch((error) => {res.status(400).json({error: error});
+    });
+  };
+
+  exports.getOneMessage = (req, res) => {
+    const id = Number(req.params.id);
+    Model.Messages.findOne({
+      attributes: ['id', 'content', 'attachment', 'likes'],
+      where: {id: id}})
     .then((things) => {
       console.log(things);
       res.status(200).json(things);
@@ -38,28 +52,42 @@ exports.getAllMessages = (req, res) => {
   };
 
 // Modifier un message
-exports.modifyMessage = (req, res, next) => {
-    const messageObject = req.file ? {
+exports.modifyMessage = (req, res) => {
+  const idPost = Number(req.params.id);  
+  var values = {...req.body};
+  var selector = { 
+  where: { id: idPost }
+  };
+    const postObject = req.file ? {
       ...JSON.parse(req.body.message),
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`} : {...req.body };
 
-      Model.Message.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+      Model.Messages.update(values, selector)
       .then(() => res.status(200).json({ message: 'Message modifié !'}))
-      .catch(error => res.status(400).json({ error }));
+      .catch(error => res.status(400).json({ message: error.message }));
   };
 
 //Supprimer un message
-exports.deleteMessage = (req, res, next) => {
-    Model.Message.findOne({ _id: req.params.id })
-      .then(thing => {
-        const filename = thing.imageUrl.split('/images/')[1];
+exports.deleteMessage = (req, res) => {
+  const idMessage = Number(req.params.id);
+  console.log(idMessage);
+    Model.Messages.findOne({ where: {id : idMessage}})
+      .then(thing => 
+        {console.log(thing)
+          if(thing.attachment != null) {
+                    const filename = thing.attachment.split('/images/')[1];
         fs.unlink(`images/${filename}`, () => {
-          Model.Message.deleteOne({ _id: req.params.id })
+          Model.Messages.destroy({ where: {id : idMessage}})
             .then(() => res.status(200).json({ message: 'Message supprimé !'}))
-            .catch(error => res.status(400).json({ error }));
+            .catch(error => res.status(400).json({  message: error.message }));
         });
+          } else {
+            Model.Messages.destroy({ where: {id : idMessage}})
+            .then(() => res.status(200).json({ message: 'Message supprimé !'}))
+            .catch(error => res.status(400).json({  message: error.message }));
+          }
       })
-      .catch(error => res.status(500).json({ error }));
+      .catch(error => res.status(500).json({ message: error.message }));
   };
 
 // like d'un message

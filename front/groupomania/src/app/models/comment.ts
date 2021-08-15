@@ -1,16 +1,16 @@
-export interface createMessage {
+export interface createComment {
     content: string,
     attachment: string,
 }
 
-export interface getAllMessages {
+export interface getAllComments {
     idUSERS: string,
     content: string,
     attachment: string,
-    likes: number,
+    likes: Number
 }
 
-export interface getOneMessage {
+export interface getOneComment {
     idMESSAGES: string,
     idUSERS: string,
     content: string,

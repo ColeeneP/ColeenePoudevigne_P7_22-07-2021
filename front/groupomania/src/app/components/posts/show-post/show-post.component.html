@@ -1,13 +1,41 @@
+<button routerLink="/addPostComponent">Créer un post</button>
+<h2>Actualité :</h2>
+<div *ngFor="let message of allMessages">
+    <section class="post">
+        <div class="contenu">
+            <div class="userIdentity">
+                <img [src]="profil.imgprofile" alt="user img" class='imgProfile' />  
+                <div class="userName">{{ profil.firstname }} {{ profil.name }}</div>
+            </div>
 
-<h2>Les derniers potins :</h2>
-<section class="post" *ngFor="let message of allMessages">
-    <div class="contenu">
-        <img src='../../../assets/img/user test.png' alt="photo de profil du publicateur"/>
-        <div class="content">{{ message.content }}</div>
-        <div class="attachment">{{ message.attachment }}</div>   
-    </div>
-    <div class="interaction">
-        <div class="comment"><i class="fas fa-reply"></i></div>
-        <div class="like"><i [ngClass]="{ 'fas fa-heart': liked }"></i></div>
-    </div>
-</section>
+            <div class="content">{{ message.content }}</div>
+            <div class="attachment">{{ message.attachment }}</div>   
+        </div>
+        <div class="interaction">
+            <div id="comment" (click)='onComment(message.id)'><i class="fas fa-reply fa-md"></i></div>
+            <div class="like"><i class='fas fa-heart fa-md'></i></div>
+            <div class="modify" (click)='onModifyMessage(message.id)' *ngIf='profil.id == message.idUSERS'><i class="far fa-edit fa-md"></i></div>
+            <div class="delete" (click)='onDeleteMessage(message.id)' *ngIf='profil.id == message.idUSERS'><i class="fas fa-trash-alt fa-md"></i></div>
+        </div>
+    </section>
+
+        <div *ngFor="let comment of allComments">
+            <section class="comment" *ngIf='comment.idMESSAGES == message.id'>
+                <div class="contenu" >
+                    <div class="userIdentity">
+                        <img [src]="profil.imgprofile" alt="user img" class='imgProfile' />  
+                        <div class="userName">{{ profil.firstname }} {{ profil.name }}</div>
+                    </div>
+            
+                    <div class="content">{{ comment.content }}</div>
+                    <div class="attachment">{{ comment.attachment }}</div>   
+                </div>
+                <div class="interaction">
+                    <div class="like"><i class='fas fa-heart fa-md'></i></div>
+                    <div class="modify" (click)='onModifyComment(comment.id)' *ngIf='profil.id == comment.idUSERS'><i class="far fa-edit fa-md"></i></div>
+                    <div class="delete" (click)='onDeleteComment(comment.id)' *ngIf='profil.id == comment.idUSERS'><i class="fas fa-trash-alt fa-md"></i></div>
+                </div>
+            </section>
+        </div>
+
+</div>

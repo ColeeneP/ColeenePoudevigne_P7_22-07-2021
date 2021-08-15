@@ -54,7 +54,7 @@ exports.signup = (req, res, next) => {
     console.log(req.headers);
     console.log(userId);
     Model.Users.findOne({
-      attributes: ['name', 'firstname',  'email', 'password', 'bio', 'imgprofile'],
+      attributes: ['id', 'name', 'firstname',  'email', 'password', 'bio', 'imgprofile'],
       where: {id: userId}
     })
     .then(
