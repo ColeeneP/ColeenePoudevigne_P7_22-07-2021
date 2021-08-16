@@ -50,7 +50,7 @@ Bon courage et à dispo si besoin :)<br />
 Stéphanie</blockquote>
 
 ### L'affichage nécessite diverses manipulations :
-Modifier les informations contenues dans le fichier .env_ex et le renommer en .env
+Modifier les informations contenues dans le fichier .env_ex et le renommer en .env<br />
 Effectuer les commandes <code>npm install -g @angular/cli</code> et <code>ng serve</code> dans le dossier front/groupomania.<br />
 Effectuer la commande <code>nodemon server</code> dans le dossier back.<br />
 
