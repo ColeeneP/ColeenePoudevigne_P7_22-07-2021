@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { PostService } from 'src/app/services/post.service';
 import { getAllMessages } from 'src/app/models/post';
@@ -20,10 +20,11 @@ export class ShowPostComponent implements OnInit {
   oneMessage: getOneMessage;
   oneComment: getOneComment;
   allComments: getAllComments;
-  liked: boolean;
   public profil: any;
   user: User;
   idMESSAGES: string;
+  loading: boolean;
+  session = JSON.parse(sessionStorage.getItem('session'));
 
   constructor(private postService : PostService,
               private formBuilder: FormBuilder,
@@ -32,7 +33,8 @@ export class ShowPostComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    this.getProfil();
+    this.loading = true;
+
     this.getAllMessages();
     this.getAllComments();
   }
@@ -40,7 +42,9 @@ export class ShowPostComponent implements OnInit {
   getAllMessages(){
     this.postService.getAllMessages().subscribe(response => {
       this.allMessages = response,
-      console.log(this.allMessages);
+      this.loading = false,
+      console.log(this.allMessages)
+      console.log(this.session);
     })
   }
 
@@ -48,7 +52,9 @@ export class ShowPostComponent implements OnInit {
     this.postService.getOneMessage(id).subscribe(response => {
       this.oneMessage = response;
       console.log(this.oneMessage);
-    })
+    }), error => {
+      error.error.message
+    }
   }
 
   getOneComment(id: string){
@@ -61,14 +67,15 @@ export class ShowPostComponent implements OnInit {
   getAllComments(){
     this.commentService.getAllComments().subscribe(response => {
       this.allComments = response,
+      this.loading = false,
       console.log(this.allComments);
     })
   }
 
-  getProfil(){
-    this.userService.getOneProfil().subscribe(response => {
+  getProfil(id :string){
+    this.userService.getOneProfil(id).subscribe(response => {
     this.profil = response,
-    console.log(this.profil)}) 
+    console.log('ici' + this.profil)}) 
   }
 
   onComment(id: string) {
@@ -96,6 +103,4 @@ export class ShowPostComponent implements OnInit {
     this.getOneComment(id);
     this.router.navigate(['deleteCommentComponent', id]);
   }
-
-
 }

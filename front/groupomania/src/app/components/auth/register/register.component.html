@@ -16,5 +16,9 @@
                 <label for='password'>Mot de passe</label>
                 <input id='password' type='password' name='password' class='form-control' formControlName ="password" required><br />
             </div>
+            <div class="formGroup">
+                <label for='bio'>Petite présentation</label>
+                <input id='bio' type='text' name='bio' class='form-control' formControlName ="bio" required><br />
+            </div>
             <button id='submit' type="submit" (click)="onRegister()">S'inscrire</button>
         </form>

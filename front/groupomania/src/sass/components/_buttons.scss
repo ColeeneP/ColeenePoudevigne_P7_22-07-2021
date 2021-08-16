@@ -4,8 +4,9 @@ button {
     border: none;
     border-radius: 20px;
     margin-top: 10px;
+    background-color: $second_color;
 
     &:hover {
-        background-color: white;
+        background-color: $font_color;
     }
 }  

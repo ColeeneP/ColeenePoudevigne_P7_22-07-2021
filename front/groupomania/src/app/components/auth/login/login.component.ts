@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   authUser: boolean;
   responseServer = null;
+  isAuth$ = new BehaviorSubject<boolean>(false);
+  loading: boolean;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -32,7 +35,10 @@ export class LoginComponent implements OnInit {
     this.userService.logUser(formOnLogin).subscribe(
       result =>
         sessionStorage[`session`] = JSON.stringify(result)),
+        this.isAuth$.next(true);
+        this.router.navigate(['showPostComponent']),
         error =>
           this.responseServer = error.error.message
     }
+    
   };

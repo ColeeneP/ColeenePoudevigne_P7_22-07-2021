@@ -5,15 +5,19 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor() { }
   newRequest: HttpRequest<any>;
   intercept(req: HttpRequest<any>, next: HttpHandler): any {
+    let authToken = null;
     if (JSON.parse(sessionStorage.getItem('session'))){
-      const authToken = JSON.parse(sessionStorage.getItem('session')).token;
+      authToken = JSON.parse(sessionStorage.getItem('session')).token;
       this.newRequest = req.clone({
       withCredentials: false ,
       headers: req.headers.set('authorization', 'Bearer ' + authToken)
       });
-    }else{
-      this.newRequest = req.clone();
+    } else{
+      authToken = '';
     }
+    this.newRequest = req.clone({
+      withCredentials: false ,
+      headers: req.headers.set('authorization', 'Bearer ' + authToken)})
     return next.handle(this.newRequest);
   }
 }

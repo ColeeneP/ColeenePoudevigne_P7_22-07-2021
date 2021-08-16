@@ -3,7 +3,8 @@ export interface User {
     name: string,
     email: string,
     bio: string,
-    imgProfile: string
+    imgProfile: string,
+    isAdmin,
 }
 
 export interface newUser {

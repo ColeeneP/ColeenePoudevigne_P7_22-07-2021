@@ -13,6 +13,12 @@ form {
             border-radius: 50%;
         }
 
+        input {
+            width: 100%;
+            border-radius: 15px;
+            height: 40px;
+        }
+
         input[type=file] {
             display: none;
         }

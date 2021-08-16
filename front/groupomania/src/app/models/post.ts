@@ -7,7 +7,6 @@ export interface getAllMessages {
     idUSERS: string,
     content: string,
     attachment: string,
-    likes: number,
 }
 
 export interface getOneMessage {
@@ -15,5 +14,4 @@ export interface getOneMessage {
     idUSERS: string,
     content: string,
     attachment: string,
-    likes: number,
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { newUser, logUser } from '../models/user';
 import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   private apiUrl = environment.api;
+  isAuth$ = new BehaviorSubject<boolean>(false);
   
   constructor(private httpClient: HttpClient,
               private router: Router) { }
@@ -23,8 +25,12 @@ export class UserService {
     return this.httpClient.post(`${this.apiUrl}/user/login`, loginRequest);
   }
 
-  getOneProfil(): Observable<any> {
-    return this.httpClient.get(`${this.apiUrl}/user/getOneUser`);
+  getOneProfil(id: string): Observable<any> {
+    return this.httpClient.get(`${this.apiUrl}/user/getOneUser/` + id);
+  }
+
+  getProfil(): Observable<any> {
+    return this.httpClient.get(`${this.apiUrl}/user/getUser`);
   }
 
   modifyProfil(name:string, firstname: string, email:string, bio: string, imgProfile: File): Observable<any>{
@@ -39,7 +45,7 @@ export class UserService {
 
   }
 
-  deleteProfil() {
-    return this.httpClient.delete(`${this.apiUrl}user/deleteUser`)
+  deleteProfil(id: string) {
+    return this.httpClient.delete(`${this.apiUrl}/user/deleteUser/` + id)
   }
 }

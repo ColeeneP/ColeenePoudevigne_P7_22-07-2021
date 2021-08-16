@@ -11,24 +11,26 @@ import { DeleteCommentComponent } from './components/comments/delete-comment/del
 import { AddCommentComponent } from './components/comments/add-comment/add-comment.component';
 import { ModifyCommentComponent } from './components/comments/modify-comment/modify-comment.component';
 import { ModifyPostComponent } from './components/posts/modify-post/modify-post.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {path: 'loginComponent', component: LoginComponent},
   {path: 'registerComponent', component: RegisterComponent},
-  {path: 'showProfileComponent', component: ShowProfileComponent},
-  {path: 'addPostComponent', component: AddPostComponent},
-  {path: 'modifyProfileComponent', component: ModifyProfileComponent},
-  {path: 'showPostComponent', component: ShowPostComponent},
-  {path: 'addCommentComponent/:id', component: AddCommentComponent},
-  {path: 'deletePostComponent/:id', component: DeletePostComponent},
-  {path: 'deleteCommentComponent/:id', component: DeleteCommentComponent},
-  {path: 'modifyPostComponent/:id', component: ModifyPostComponent},
-  {path: 'modifyCommentComponent/:id', component: ModifyCommentComponent},
+  {path: 'showProfileComponent', component: ShowProfileComponent, canActivate: [AuthGuard] },
+  {path: 'addPostComponent', component: AddPostComponent, canActivate: [AuthGuard]},
+  {path: 'modifyProfileComponent', component: ModifyProfileComponent, canActivate: [AuthGuard]},
+  {path: 'showPostComponent', component: ShowPostComponent, canActivate: [AuthGuard]},
+  {path: 'addCommentComponent/:id', component: AddCommentComponent, canActivate: [AuthGuard]},
+  {path: 'deletePostComponent/:id', component: DeletePostComponent, canActivate: [AuthGuard]},
+  {path: 'deleteCommentComponent/:id', component: DeleteCommentComponent, canActivate: [AuthGuard]},
+  {path: 'modifyPostComponent/:id', component: ModifyPostComponent, canActivate: [AuthGuard]},
+  {path: 'modifyCommentComponent/:id', component: ModifyCommentComponent, canActivate: [AuthGuard]},
 
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }

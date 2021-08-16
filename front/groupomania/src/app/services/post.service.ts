@@ -42,26 +42,5 @@ export class PostService {
   deleteMessage(id: string): Observable<any>{
     return this.http.delete(`${this.apiUrl}/message/deleteMessage/` + id);
   }
-
-  likePost(id: string, like: boolean) {
-    return new Promise((resolve, reject) => {
-      this.http.post(
-        'http://localhost:3000/api/message' + id + '/like',
-        {
-          // userId: this.getUserId(),
-          like: like ? 1 : 0,
-          type: 'like'
-        })
-        .subscribe(
-          (response: { message: string }) => {
-            resolve(like);
-          },
-          (error) => {
-            reject(error);
-        }
-      );
-    });
-
-  }
 }
 

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { RegisterComponent } from '../../auth/register/register.component';
 
 @Component({
   selector: 'app-delete-profile',
@@ -7,14 +9,18 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class DeleteProfileComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  id = window.location.href.split('showProfileComponent/')[1];
+
+  constructor(private userService: UserService,
+              private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  onDeleteProfil() {
-    this.userService.deleteProfil().subscribe()
+  onDeleteProfil(id: string) {
+    this.userService.deleteProfil(id).subscribe()
     sessionStorage.clear()
+    this.router.navigate(['registerComponent'])
   }
 
 }

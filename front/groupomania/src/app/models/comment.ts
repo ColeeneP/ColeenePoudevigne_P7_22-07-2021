@@ -7,7 +7,6 @@ export interface getAllComments {
     idUSERS: string,
     content: string,
     attachment: string,
-    likes: Number
 }
 
 export interface getOneComment {
@@ -15,5 +14,4 @@ export interface getOneComment {
     idUSERS: string,
     content: string,
     attachment: string,
-    likes: number,
 }

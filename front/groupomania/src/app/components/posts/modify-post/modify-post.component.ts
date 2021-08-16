@@ -75,7 +75,7 @@ onFileAdded(event: Event) {
 }
 
 getProfil(){
-  this.userService.getOneProfil().subscribe(response => {
+  this.userService.getProfil().subscribe(response => {
   this.profil = response,
   console.log(this.profil)}) 
 }

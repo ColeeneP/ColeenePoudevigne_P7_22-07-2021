@@ -24,7 +24,12 @@ exports.createComment = (req, res) => {
 // Afficher tous les commentaires
 exports.getAllComments = (req, res, next) => {
     Model.Comments.findAll({
-      attributes: ['id', 'idMESSAGES', 'idUSERS', 'content', 'attachment', 'likes']})
+      attributes: ['id', 'idMESSAGES', 'idUSERS', 'content', 'attachment'],
+      include: [{
+        model: Model.Users,
+        attributes: ['id', 'name', 'firstname', 'imgprofile'],
+        as: 'users_comments'
+      }]})
     .then((things) => {res.status(200).json(things);
     })
     .catch((error) => {res.status(400).json({error: error});
@@ -34,7 +39,7 @@ exports.getAllComments = (req, res, next) => {
 exports.getOneComment = (req, res) => {
   const id = Number(req.params.id);
   Model.Comments.findOne({
-    attributes: ['id', 'content', 'attachment', 'likes'],
+    attributes: ['id', 'content', 'attachment'],
     where: {id: id}})
   .then((things) => {
     console.log(things);
@@ -47,15 +52,14 @@ exports.getOneComment = (req, res) => {
 // Modifier un commentaire
 exports.modifyComment = (req, res, next) => {
   const idComment = Number(req.params.id);  
-  var values = {...req.body};
-  var selector = { 
-  where: { id: idComment }
-  };
-    const commentObject = req.file ? {
-      ...JSON.parse(req.body.comment),
-      attachment: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`} : {...req.body };
-
-      Model.Comments.update(values, selector)
+  const message = ({
+    idMESSAGES: idComment,
+    content: req.body.content,
+  })
+  if (req.file) {
+    message.attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  }
+      Model.Comments.update(message, {where: {id: idComment}})
       .then(() => res.status(200).json({ message: 'Commentaire modifié !'}))
       .catch(error => res.status(400).json({ message: error.message }));
   };
@@ -82,21 +86,3 @@ exports.deleteComment = (req, res) => {
       })
       .catch(error => res.status(500).json({ message: error.message }));
   };
-
-// liker un commentaire
-exports.likeComment = (req, res, next) => {    
-    const like = req.body.like;
-    if (like === 1) { // like
-        Comments.updateOne({_id: req.params.id}, { $inc: { likes: 1}, $push: { likes: req.body.userId}, _id: req.params.id })
-        .then( () => res.status(200).json({ message: 'Vous aimez ce commentaire !' }))
-        .catch( error => res.status(400).json({ error}));
-    } else { // annuler le like
-        Comment.findOne({_id: req.params.id})
-        .then( comment => {
-            Comment.updateOne({_id: req.params.id}, { $inc: { likes: -1}, $pull: { likes: req.body.userId}, _id: req.params.id })
-                .then( () => res.status(200).json({ message: 'Vous n\'aimez plus ce commentaire!' }))
-                .catch( error => res.status(400).json({ error}));
-        })
-        .catch( error => res.status(400).json({ error}));  
-    }           
-};

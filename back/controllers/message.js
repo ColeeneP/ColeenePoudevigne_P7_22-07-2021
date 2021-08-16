@@ -10,8 +10,10 @@ exports.createMessage = (req, res) => {
     const message = ({
       idUSERS: userId,
       content: req.body.content,
-      attachment: req.body.attachment && req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}`: null,
-    });
+    })
+    if (req.file) {
+      message.attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    }
     console.log(message);
       Model.Messages.create({
         idUSERS: userId,
@@ -29,7 +31,12 @@ exports.createMessage = (req, res) => {
 // Afficher tous les messages
 exports.getAllMessages = (req, res) => {
     Model.Messages.findAll({
-      attributes: ['id', 'idUSERS', 'content', 'attachment', 'likes']})
+      attributes: ['id', 'idUSERS', 'content', 'attachment'],
+      include: [{
+        model: Model.Users,
+        attributes: ['id', 'name', 'firstname', 'imgprofile'],
+        as: 'users_messages'
+      }]})
     .then((things) => {
       console.log(things);
       res.status(200).json(things);
@@ -41,7 +48,7 @@ exports.getAllMessages = (req, res) => {
   exports.getOneMessage = (req, res) => {
     const id = Number(req.params.id);
     Model.Messages.findOne({
-      attributes: ['id', 'content', 'attachment', 'likes'],
+      attributes: ['id', 'content', 'attachment'],
       where: {id: id}})
     .then((things) => {
       console.log(things);
@@ -54,15 +61,14 @@ exports.getAllMessages = (req, res) => {
 // Modifier un message
 exports.modifyMessage = (req, res) => {
   const idPost = Number(req.params.id);  
-  var values = {...req.body};
-  var selector = { 
-  where: { id: idPost }
-  };
-    const postObject = req.file ? {
-      ...JSON.parse(req.body.message),
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`} : {...req.body };
-
-      Model.Messages.update(values, selector)
+  const message = ({
+    idMESSAGES: idPost,
+    content: req.body.content,
+  })
+  if (req.file) {
+    message.attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  }
+      Model.Messages.update(message, {where: {id: idPost}})
       .then(() => res.status(200).json({ message: 'Message modifié !'}))
       .catch(error => res.status(400).json({ message: error.message }));
   };
@@ -89,23 +95,3 @@ exports.deleteMessage = (req, res) => {
       })
       .catch(error => res.status(500).json({ message: error.message }));
   };
-
-// like d'un message
-exports.likeMessage = (req, res, next) => {    
-    const like = req.body.like;
-    
-    if (like === 1) { // like
-        Model.Message.updateOne({_id: req.params.id}, { $inc: { likes: 1}, $push: { likes: req.body.userId}, _id: req.params.id })
-        .then( () => res.status(200).json({ message: 'Vous aimez ce message !' }))
-        .catch( error => res.status(400).json({ error}))
-
-    } else { // annuler le like
-        Model.Message.findOne({_id: req.params.id})
-        .then( message => {
-            Model.Message.updateOne({_id: req.params.id}, { $inc: { likes: -1}, $pull: { likes: req.body.userId}, _id: req.params.id })
-                .then( () => res.status(200).json({ message: 'Vous n\'aimez plus ce message !' }))
-                .catch( error => res.status(400).json({ error}))
-        })
-        .catch( error => res.status(400).json({ error}))  
-    }           
-};

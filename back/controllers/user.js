@@ -11,7 +11,8 @@ exports.signup = (req, res, next) => {
           firstname: req.body.firstname,
           name: req.body.name,
           email: req.body.email,
-          password: hash // On récupère le hash créé et on créé un user avec ce hash
+          password: hash, // On récupère le hash créé et on créé un user avec ce hash
+          bio: req.body.bio
         }; console.log(user);
         Model.Users.create(user) // On enregistre le user dans la BDD
           .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
@@ -50,11 +51,24 @@ exports.signup = (req, res, next) => {
 
 // controller d'accès à un profil
   exports.getOneUser = (req, res) => {
-    const userId = Number(req.user.userId);
-    console.log(req.headers);
-    console.log(userId);
+    const userId = Number(req.params.id);
+  
     Model.Users.findOne({
-      attributes: ['id', 'name', 'firstname',  'email', 'password', 'bio', 'imgprofile'],
+      attributes: ['id', 'name', 'firstname',  'email', 'password', 'bio', 'imgprofile', 'isAdmin'],
+      where: {id: userId}
+    })
+    .then(
+      (response) => {res.status(200).json(response)
+        console.log(response);}
+    ).catch(
+      (error) => { res.status(404).json({ error });}
+    )
+  };
+
+  exports.getUser = (req, res) => {
+    const userId = Number(req.user.userId);
+    Model.Users.findOne({
+      attributes: ['id', 'name', 'firstname',  'email', 'password', 'bio', 'imgprofile', 'isAdmin'],
       where: {id: userId}
     })
     .then(
@@ -77,14 +91,55 @@ exports.modifyUser = (req, res, next) => {
   };
 
   exports.deleteUser = (req, res, next) => {
-    Model.Users.findOne({ _id: req.params.id })
+    const userId = Number(req.user.userId);
+    Model.Users.findOne({ where: {id: userId} })
       .then(thing => {
-        const filename = thing.imageUrl.split('/images/')[1];
-        fs.unlink(`images/${filename}`, () => {
-          Model.Users.destroy({ _id: req.params.id })
-            .then(() => res.status(200).json({ message: 'Utilisateur supprimé !'}))
-            .catch(error => res.status(400).json({ error }));
-        });
+        if(thing.attachment != null) {
+          const filename = thing.attachment.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {
+            Model.Users.destroy({ where: {id: userId}})
+              .then(() => res.status(200).json({ message: 'Utilisateur supprimé !'}))
+              .catch(error => res.status(400).json({  message: error.message }));
+            });
+            } else {
+              Model.Users.destroy({ where: {id: userId}})
+              .then(() => res.status(200).json({ message: 'Utilisateur supprimé !'}))
+              .catch(error => res.status(400).json({  message: error.message }));
+            }
       })
       .catch(error => res.status(500).json({ error }));
+
+      Model.Messages.findAll({ where: {idUSERS : userId}})
+      .then(thing => 
+        {console.log(thing)
+          if(thing.attachment != null) {
+                    const filename = thing.attachment.split('/images/')[1];
+        fs.unlink(`images/${filename}`, () => {
+          Model.Messages.destroy({ where: {idUSERS : userId}})
+            .then(() => res.status(200).json({ message: 'Message supprimé !'}))
+            .catch(error => res.status(400).json({  message: error.message }));
+        });
+          } else {
+            Model.Messages.destroy({ where: {idUSERS : userId}})
+            .then(() => res.status(200).json({ message: 'Message supprimé !'}))
+            .catch(error => res.status(400).json({  message: error.message }));
+          }
+      }) .catch(error => res.status(500).json({ error }));
+
+      Model.Comments.findAll({ where: {idUSERS : userId}})
+      .then(thing => 
+        {console.log(thing)
+          if(thing.attachment != null) {
+                    const filename = thing.attachment.split('/images/')[1];
+        fs.unlink(`images/${filename}`, () => {
+          Model.Messages.destroy({ where: {idUSERS : userId}})
+            .then(() => res.status(200).json({ message: 'Message supprimé !'}))
+            .catch(error => res.status(400).json({  message: error.message }));
+        });
+          } else {
+            Model.Messages.destroy({ where: {idUSERS : userId}})
+            .then(() => res.status(200).json({ message: 'Message supprimé !'}))
+            .catch(error => res.status(400).json({  message: error.message }));
+          }
+      }) .catch(error => res.status(500).json({ error }));
   };

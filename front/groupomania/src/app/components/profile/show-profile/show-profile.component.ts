@@ -13,6 +13,7 @@ export class ShowProfileComponent implements OnInit {
   user: User;
   defautPicture: 'https://www.w3schools.com/howto/img_avatar.png';
   url: '';
+  session = JSON.parse(sessionStorage.getItem('session'));
 
   constructor(private userService: UserService,
               private router: Router) { }
@@ -22,7 +23,7 @@ export class ShowProfileComponent implements OnInit {
   }
   
   getProfil(){
-      this.userService.getOneProfil().subscribe(response => {
+      this.userService.getProfil().subscribe(response => {
       this.profil = response,
       console.log(this.profil)}) 
   }

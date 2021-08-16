@@ -30,7 +30,7 @@ export class ModifyProfileComponent implements OnInit {
   }
 
   getProfil(): void {
-    this.userService.getOneProfil().subscribe(userProfil => {
+    this.userService.getProfil().subscribe(userProfil => {
     this.getOneProfil = userProfil})
 }
 

@@ -9,6 +9,5 @@ router.get('/getAllMessages', auth, messageCtrl.getAllMessages);
 router.get('/getOneMessage/:id', auth, messageCtrl.getOneMessage);
 router.put('/modifyMessage/:id', auth, multer, messageCtrl.modifyMessage);
 router.delete('/deleteMessage/:id', auth, messageCtrl.deleteMessage);
-router.post('/', auth, messageCtrl.likeMessage);
 
 module.exports = router;

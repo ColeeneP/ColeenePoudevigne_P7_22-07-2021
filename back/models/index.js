@@ -1,37 +1,53 @@
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
-const db = {};
-
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
-
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-  })
-  .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-  });
-
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
+"use strict";
+require("dotenv").config();
+const dbConfig = require("../config/db.config.js");
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize(
+  process.env.DB,
+  process.env.USERS,
+  process.env.PASSWORD,
+  {
+    host: process.env.HOST,
+    dialect: dbConfig.dialect,
+    operatorsAliases: false,
+    pool: {
+      max: dbConfig.pool.max,
+      min: dbConfig.pool.min,
+      acquire: dbConfig.pool.acquire,
+      idle: dbConfig.pool.idle,
+    },
   }
+);
+const db = {};
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+module.exports = db
+db.Users = require('./users')(Sequelize, sequelize);
+db.Comments = require('./comments')(Sequelize, sequelize);
+db.Messages = require('./messages')(Sequelize, sequelize);
+
+db.Users.hasMany(db.Messages, {
+  foreignKey: 'idUSERS',
+  as: 'users_messages'
+});
+db.Messages.belongsTo(db.Users, {
+  foreignKey: 'idUSERS',
+  as: 'users_messages'
 });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-
-module.exports = db;
+db.Users.hasMany(db.Comments, {
+  foreignKey: 'idUSERS',
+  as: 'users_comments'
+});
+db.Comments.belongsTo(db.Users, {
+  foreignKey: 'idUSERS',
+  as: 'users_comments'
+});
+db.Messages.hasMany(db.Comments, {
+  foreignKey: 'idMESSAGES',
+  as: 'messages_comments'
+});
+db.Comments.belongsTo(db.Messages, {
+  foreignKey: 'idMESSAGES',
+  as: 'messages_comments'
+});

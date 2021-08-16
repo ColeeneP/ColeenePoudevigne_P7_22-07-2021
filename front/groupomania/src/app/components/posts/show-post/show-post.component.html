@@ -1,21 +1,22 @@
+<div *ngIf='loading'></div><div *ngIf='!loading'>
+<h2>Dernières activités :</h2>    
 <button routerLink="/addPostComponent">Créer un post</button>
-<h2>Actualité :</h2>
+
 <div *ngFor="let message of allMessages">
     <section class="post">
         <div class="contenu">
             <div class="userIdentity">
-                <img [src]="profil.imgprofile" alt="user img" class='imgProfile' />  
-                <div class="userName">{{ profil.firstname }} {{ profil.name }}</div>
+                <img [src]="message.users_messages.imgprofile" alt="user img" class='imgProfile' />  
+                <div class="userName"><p>{{ message.users_messages.firstname }} {{ message.users_messages.name }}</p></div>
             </div>
 
-            <div class="content">{{ message.content }}</div>
-            <div class="attachment">{{ message.attachment }}</div>   
+            <div class="content"><p>{{ message.content }}</p></div>
+            <div class="attachment" *ngIf='message.attachment'><img class="attachment_post" [src]='message.attachment' /></div>   
         </div>
         <div class="interaction">
             <div id="comment" (click)='onComment(message.id)'><i class="fas fa-reply fa-md"></i></div>
-            <div class="like"><i class='fas fa-heart fa-md'></i></div>
-            <div class="modify" (click)='onModifyMessage(message.id)' *ngIf='profil.id == message.idUSERS'><i class="far fa-edit fa-md"></i></div>
-            <div class="delete" (click)='onDeleteMessage(message.id)' *ngIf='profil.id == message.idUSERS'><i class="fas fa-trash-alt fa-md"></i></div>
+            <div class="modify" (click)='onModifyMessage(message.id)' *ngIf='message.users_messages.id == session.userId || session.isAdmin '><i class="far fa-edit fa-md"></i></div>
+            <div class="delete" (click)='onDeleteMessage(message.id)' *ngIf='message.users_messages.id == session.userId || session.isAdmin '><i class="fas fa-trash-alt fa-md"></i></div>
         </div>
     </section>
 
@@ -23,19 +24,19 @@
             <section class="comment" *ngIf='comment.idMESSAGES == message.id'>
                 <div class="contenu" >
                     <div class="userIdentity">
-                        <img [src]="profil.imgprofile" alt="user img" class='imgProfile' />  
-                        <div class="userName">{{ profil.firstname }} {{ profil.name }}</div>
+                        <img [src]="comment.users_comments.imgprofile" alt="user img" class='imgProfile' />  
+                        <div class="userName"><p>{{ comment.users_comments.firstname }} {{ comment.users_comments.name }}</p></div>
                     </div>
             
-                    <div class="content">{{ comment.content }}</div>
-                    <div class="attachment">{{ comment.attachment }}</div>   
+                    <div class="content"><p>{{ comment.content }}</p></div>
+                    <div class="attachment" *ngIf='comment.attachment'><img class="attachment_comment" [src]='comment.attachment' /></div>   
                 </div>
                 <div class="interaction">
-                    <div class="like"><i class='fas fa-heart fa-md'></i></div>
-                    <div class="modify" (click)='onModifyComment(comment.id)' *ngIf='profil.id == comment.idUSERS'><i class="far fa-edit fa-md"></i></div>
-                    <div class="delete" (click)='onDeleteComment(comment.id)' *ngIf='profil.id == comment.idUSERS'><i class="fas fa-trash-alt fa-md"></i></div>
+                    <div class="modify" (click)='onModifyComment(comment.id)' *ngIf='comment.users_comments.id == session.userId || session.isAdmin '><i class="far fa-edit fa-md"></i></div>
+                    <div class="delete" (click)='onDeleteComment(comment.id)' *ngIf='comment.users_comments.id == session.userId || session.isAdmin '><i class="fas fa-trash-alt fa-md"></i></div>
                 </div>
             </section>
         </div>
 
+</div>
 </div>

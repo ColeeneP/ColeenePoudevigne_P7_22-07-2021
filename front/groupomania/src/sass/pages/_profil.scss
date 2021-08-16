@@ -6,7 +6,7 @@
     flex-flow: row wrap;
     justify-content: space-between;
     padding: 10px;
-    background-color: rgb(104, 104, 104);
+    background-color: $first_color;
 
     .imgProfile {
         width: 200px;
@@ -26,3 +26,33 @@
     }
 }
 
+@media (min-width: 501px) and (max-width: 800px) {
+    .presentation {
+
+        .imgProfile {
+            width: 100px;
+        }
+
+        .identite {
+            display: block;
+            align-self: center;
+            width: 50%;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .presentation {
+
+        .imgProfile {
+        width: 100px;
+        }
+
+        .identite {
+            display: block;
+            align-self: center;
+            width: 50%;
+            font-size: 14px;
+        }
+    }
+}

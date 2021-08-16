@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const helmet = require('helmet'); // middleware tier d'express pour la sécurisation
 const dotenv = require('dotenv').config(); // fait appel à dotenv pour sécurisé la connexion à la BDD
-const mongoSanitize = require('express-mongo-sanitize'); // middleware de prévention contre les injections opérateur
 const db = require("./models");
 
 const express = require('express');
@@ -18,6 +17,7 @@ const commentRoutes = require('./routes/comment');
 // connexion BDD
 
 db.sequelize.sync();
+// db.sequelize.sync({force: true})
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_MDP, {
   host: 'localhost',
@@ -44,7 +44,6 @@ app.use((req, res, next) => {
 app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
-app.use(mongoSanitize()); // Clear user data
 
 
 // Appel des routers
