@@ -38,13 +38,11 @@ export class RegisterComponent implements OnInit {
     result => {
       console.log(result);
       this.responseServer = result;
+      this.router.navigate['showPostComponent'];
     },
     error =>
       this.responseServer = error.error.message
-      
   )
-  this.router.navigate['showPostComponent'];
-  console.log(formOnRegister)
 };
   
 }

@@ -25,7 +25,7 @@ const routes: Routes = [
   {path: 'deleteCommentComponent/:id', component: DeleteCommentComponent, canActivate: [AuthGuard]},
   {path: 'modifyPostComponent/:id', component: ModifyPostComponent, canActivate: [AuthGuard]},
   {path: 'modifyCommentComponent/:id', component: ModifyCommentComponent, canActivate: [AuthGuard]},
-
+  {path: '', component: LoginComponent}
 ];
 
 @NgModule({

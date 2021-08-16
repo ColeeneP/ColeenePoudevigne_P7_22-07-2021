@@ -31,6 +31,7 @@ exports.createMessage = (req, res) => {
 // Afficher tous les messages
 exports.getAllMessages = (req, res) => {
     Model.Messages.findAll({
+      order: [["createdAt", "DESC"]],
       attributes: ['id', 'idUSERS', 'content', 'attachment'],
       include: [{
         model: Model.Users,

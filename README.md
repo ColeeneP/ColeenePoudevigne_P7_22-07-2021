@@ -50,8 +50,11 @@ Bon courage et à dispo si besoin :)<br />
 Stéphanie</blockquote>
 
 ### L'affichage nécessite diverses manipulations :
-Effectuer la commande <code>ng serve</code> dans le dossier front/groupomania.<br />
+Modifier les informations contenues dans le fichier .env_ex et le renommer en .env
+Effectuer les commandes <code>npm install -g @angular/cli</code> et <code>ng serve</code> dans le dossier front/groupomania.<br />
 Effectuer la commande <code>nodemon server</code> dans le dossier back.<br />
+
+Rendez vous sur http://localhost:4200 pour accéder au projet.
 
 ### Packages utilisés :
 <code>npm install --save dotenv</code><br />
@@ -60,4 +63,3 @@ Effectuer la commande <code>nodemon server</code> dans le dossier back.<br />
 <code>npm install --save multer</code><br />
 <code>npm install --save helmet</code><br />
 <code>npm install --save express-rate-limit</code><br />
-<code>npm install --save body-parser<code><br />

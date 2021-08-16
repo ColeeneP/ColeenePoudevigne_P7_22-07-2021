@@ -1,8 +1,9 @@
+<app-header></app-header>
 <div class="presentation">     
     <img [src]="profil.imgprofile" alt="user img" class='imgProfile' />               
         <div class="identite">Je m'appelle {{ profil.firstname }} {{ profil.name }}<br />
         {{ profil.bio }} 
     </div>
-        <button routerLink="/modifyProfileComponent" >Modifier mon profil</button>
+        <button >Modifier mon profil</button>
         <div class="lienApp" *ngIf='profil.id == session.userId || session.isAdmin '><app-delete-profile></app-delete-profile></div>
 </div>

@@ -15,8 +15,6 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { LoginComponent } from './components/auth/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ModifyProfileComponent } from './components/profile/modify-profile/modify-profile.component';
-import { LikePostComponent } from './components/posts/like-post/like-post.component';
-import { LikeCommentComponent } from './components/comments/like-comment/like-comment.component';
 import { DeleteCommentComponent } from './components/comments/delete-comment/delete-comment.component';
 import { DeleteProfileComponent } from './components/profile/delete-profile/delete-profile.component';
 import { AuthInterceptor } from './auth-interceptor';
@@ -38,8 +36,6 @@ import { ModifyPostComponent } from './components/posts/modify-post/modify-post.
     LoginComponent,
     HeaderComponent,
     ModifyProfileComponent,
-    LikePostComponent,
-    LikeCommentComponent,
     DeleteCommentComponent,
     DeleteProfileComponent,
     ModifyCommentComponent,

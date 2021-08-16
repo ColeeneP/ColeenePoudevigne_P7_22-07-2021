@@ -11,7 +11,6 @@ import { BehaviorSubject } from 'rxjs';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  authUser: boolean;
   responseServer = null;
   isAuth$ = new BehaviorSubject<boolean>(false);
   loading: boolean;
@@ -33,12 +32,12 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.get('password').value
     }
     this.userService.logUser(formOnLogin).subscribe(
-      result =>
-        sessionStorage[`session`] = JSON.stringify(result)),
-        this.isAuth$.next(true);
-        this.router.navigate(['showPostComponent']),
-        error =>
-          this.responseServer = error.error.message
-    }
+      result => {
+        sessionStorage[`session`] = JSON.stringify(result),
+        this.isAuth$.next(true),
+        this.router.navigate(['/showPostComponent'])},
+        error => {
+          this.responseServer = error.error.message }
+    )}
     
   };
