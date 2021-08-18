@@ -50,9 +50,10 @@ Bon courage et à dispo si besoin :)<br />
 Stéphanie</blockquote>
 
 ### L'affichage nécessite diverses manipulations :
+Créer une base de données avec la commande <code>CREATE DATABASE name_database;</code>
 Modifier les informations contenues dans le fichier .env_ex et le renommer en .env<br />
-Effectuer les commandes <code>npm install -g @angular/cli</code> et <code>ng serve</code> dans le dossier front/groupomania.<br />
-Effectuer la commande <code>nodemon server</code> dans le dossier back.<br />
+Effectuer les commandes :<br /><code>npm install -g @angular/cli</code><br /> <code>npm install</code><br /> <code>ng serve</code><br /> dans le dossier front/groupomania.<br />
+Effectuer les commandes :<br /><code>npm install</code><br /> <code>nodemon server</code><br /> dans le dossier back.<br />
 
 Rendez vous sur http://localhost:4200 pour accéder au projet.
 
