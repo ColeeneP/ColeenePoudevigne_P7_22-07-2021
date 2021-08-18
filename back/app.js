@@ -1,23 +1,21 @@
-const mysql = require ('mysql');
 const cors = require('cors');
 const Sequelize = require('sequelize');
-const bodyParser = require('body-parser');
 const path = require('path');
 const helmet = require('helmet'); // middleware tier d'express pour la sécurisation
-const dotenv = require('dotenv').config(); // fait appel à dotenv pour sécurisé la connexion à la BDD
 const db = require("./models");
-
 const express = require('express');
 const app = express();
-
 const userRoutes = require('./routes/user');
 const messageRoutes = require('./routes/message');
 const commentRoutes = require('./routes/comment');
+const bodyParser = require('body-parser');
 
-// connexion BDD
+// création tables
 
 db.sequelize.sync();
 // db.sequelize.sync({force: true})
+
+// connexion à la BDD
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_MDP, {
   host: 'localhost',
@@ -43,8 +41,7 @@ app.use((req, res, next) => {
 
 app.use(cors());
 app.use(helmet());
-app.use(bodyParser.json());
-
+app.use(bodyParser());
 
 // Appel des routers
 app.use('/images', express.static(path.join(__dirname, 'images')));

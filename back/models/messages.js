@@ -18,12 +18,8 @@ const Messages = sequelize.define(
               key: 'id'
             }
           },
-          content: {
-            allowNull: false,
-            type: Sequelize.STRING
-          },
           attachment: {
-            allowNull: true,
+            allowNull: false,
             type: Sequelize.STRING
           },
           createdAt: {

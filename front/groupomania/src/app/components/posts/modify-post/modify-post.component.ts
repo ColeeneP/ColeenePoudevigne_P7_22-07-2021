@@ -37,14 +37,12 @@ export class ModifyPostComponent implements OnInit {
         this.modifyForm(),
         this.onSubmit))
     this.modifyPost = this.formBuilder.group({
-      content: this.formBuilder.control('', [Validators.required, Validators.minLength(10), Validators.maxLength(255)]),
       attachment: this.formBuilder.control('')
     })
   }
 
   modifyForm() {
     this.modifyPost = this.formBuilder.group({
-      content: [this.post.content, Validators.required, Validators.minLength(10), Validators.maxLength(255)],
       attachment: [this.post.attachment]})
       console.log(this.post);
   }
@@ -52,9 +50,8 @@ export class ModifyPostComponent implements OnInit {
   // Modification du post
   onSubmit(): void {
       let idPost = window.location.href.split('modifyPostComponent/')[1];
-      let content = this.modifyPost.get('content').value;
       let attachment = this.modifyPost.get('attachment').value;
-    this.postService.modifyMessage(idPost, content, attachment).subscribe(
+    this.postService.modifyMessage(idPost, attachment).subscribe(
       result =>
         console.log(result),
         error =>

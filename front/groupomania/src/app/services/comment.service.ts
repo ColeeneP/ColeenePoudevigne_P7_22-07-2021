@@ -15,11 +15,10 @@ export class CommentService {
   constructor(private http: HttpClient) { }
 
 
-  createComment(idMessage: string, content: string, attachment: File):Observable<any>{
+  createComment(idMessage: string, content: string):Observable<any>{
     let formData = new FormData();  
       formData.append('idMessage', idMessage)
       formData.append('content', content);
-      formData.append('attachment', attachment);
     return this.http.post(`${this.apiUrl}/comment/createComment`, formData);
   }
 
@@ -31,11 +30,10 @@ export class CommentService {
     return this.http.get(`${this.apiUrl}/comment/getOneComment/` + id);
   }
 
-  modifyComment(id: string, content: string, attachment: File): Observable<any>{
+  modifyComment(id: string, content: string): Observable<any>{
     let formData = new FormData();  
     formData.append('idComment', id);
     formData.append('content', content);
-    formData.append('attachment', attachment);
     return this.http.put(`${this.apiUrl}/comment/modifyComment/` + id, formData);
   }
 

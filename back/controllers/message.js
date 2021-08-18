@@ -17,7 +17,6 @@ exports.createMessage = (req, res) => {
     console.log(message);
       Model.Messages.create({
         idUSERS: userId,
-        content: req.body.content,
         attachment: message.attachment
       }).then(
         () => {
@@ -32,7 +31,7 @@ exports.createMessage = (req, res) => {
 exports.getAllMessages = (req, res) => {
     Model.Messages.findAll({
       order: [["createdAt", "DESC"]],
-      attributes: ['id', 'idUSERS', 'content', 'attachment'],
+      attributes: ['id', 'idUSERS', 'attachment'],
       include: [{
         model: Model.Users,
         attributes: ['id', 'name', 'firstname', 'imgprofile'],
@@ -49,7 +48,7 @@ exports.getAllMessages = (req, res) => {
   exports.getOneMessage = (req, res) => {
     const id = Number(req.params.id);
     Model.Messages.findOne({
-      attributes: ['id', 'content', 'attachment'],
+      attributes: ['id', 'attachment'],
       where: {id: id}})
     .then((things) => {
       console.log(things);
@@ -64,7 +63,7 @@ exports.modifyMessage = (req, res) => {
   const idPost = Number(req.params.id);  
   const message = ({
     idMESSAGES: idPost,
-    content: req.body.content,
+    attachment: req.body.attachment,
   })
   if (req.file) {
     message.attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
@@ -77,22 +76,29 @@ exports.modifyMessage = (req, res) => {
 //Supprimer un message
 exports.deleteMessage = (req, res) => {
   const idMessage = Number(req.params.id);
+  const userId = Number(req.user.userId);
   console.log(idMessage);
-    Model.Messages.findOne({ where: {id : idMessage}})
-      .then(thing => 
-        {console.log(thing)
-          if(thing.attachment != null) {
-                    const filename = thing.attachment.split('/images/')[1];
-        fs.unlink(`images/${filename}`, () => {
-          Model.Messages.destroy({ where: {id : idMessage}})
-            .then(() => res.status(200).json({ message: 'Message supprimé !'}))
-            .catch(error => res.status(400).json({  message: error.message }));
-        });
+      Model.Messages.findOne({ where: {id : idMessage}})
+      .then(thing => {
+      Model.Users.findOne({ where: {id: userId}})
+        .then(userFound => {
+          if (userFound.isAdmin == 1 || userFound.id == thing.idUSERS) {
+              if(thing.attachment != null) {
+                        const filename = thing.attachment.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {
+              Model.Messages.destroy({ where: {id : idMessage}})
+                .then(() => res.status(200).json({ message: 'Message supprimé !'}))
+                .catch(error => res.status(400).json({  message: error.message }));
+            });
+              } else {
+                Model.Messages.destroy({ where: {id : idMessage}})
+                .then(() => res.status(200).json({ message: 'Message supprimé !'}))
+                .catch(error => res.status(400).json({  message: error.message }));
+              }
           } else {
-            Model.Messages.destroy({ where: {id : idMessage}})
-            .then(() => res.status(200).json({ message: 'Message supprimé !'}))
-            .catch(error => res.status(400).json({  message: error.message }));
+            return res.status(403).json({ message: 'Autorisation refusée' });
           }
+        })
       })
-      .catch(error => res.status(500).json({ message: error.message }));
+      .catch(error => res.status(500).json({ message: error.message }))
   };

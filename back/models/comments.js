@@ -22,10 +22,6 @@ const Comments = sequelize.define(
             allowNull: false,
             type: Sequelize.STRING
           },
-          attachment: {
-            allowNull: true,
-            type: Sequelize.STRING
-          },
           createdAt: {
             allowNull: false,
             type: Sequelize.DATE,

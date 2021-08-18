@@ -13,7 +13,7 @@ export class ShowProfileComponent implements OnInit {
   user: User;
   defautPicture: 'https://www.w3schools.com/howto/img_avatar.png';
   url: '';
-  session = JSON.parse(sessionStorage.getItem('session'));
+  session = JSON.parse(localStorage.getItem('session'));
 
   constructor(private userService: UserService,
               private router: Router) { }

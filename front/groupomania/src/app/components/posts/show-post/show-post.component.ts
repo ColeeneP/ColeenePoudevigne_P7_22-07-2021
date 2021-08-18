@@ -24,7 +24,7 @@ export class ShowPostComponent implements OnInit {
   user: User;
   idMESSAGES: string;
   loading: boolean;
-  session = JSON.parse(sessionStorage.getItem('session'));
+  session = JSON.parse(localStorage.getItem('session'));
 
   constructor(private postService : PostService,
               private formBuilder: FormBuilder,

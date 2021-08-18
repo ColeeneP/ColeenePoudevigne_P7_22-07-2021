@@ -37,41 +37,26 @@ export class ModifyCommentComponent implements OnInit {
         this.modifyForm(),
         this.onSubmit))
     this.modifyComment = this.formBuilder.group({
-      content: this.formBuilder.control('', [Validators.required, Validators.minLength(10), Validators.maxLength(255)]),
-      attachment: this.formBuilder.control('')
+      content: this.formBuilder.control('', [Validators.required, Validators.minLength(10), Validators.maxLength(255)])
     })
   }
 
   modifyForm() {
     this.modifyComment = this.formBuilder.group({
-      content: [this.comment.content, Validators.required, Validators.minLength(10), Validators.maxLength(255)],
-      attachment: [this.comment.attachment]})
-      console.log(this.comment);
-  }
+      content: [this.comment.content, Validators.required, Validators.minLength(10), Validators.maxLength(255)]
+  })}
 
   // Création d'un commentaire
   onSubmit(): void {
       let idComment = window.location.href.split('modifyCommentComponent/')[1];
       let content = this.modifyComment.get('content').value;
-      let attachment = this.modifyComment.get('attachment').value;
-    this.commentService.modifyComment(idComment, content, attachment).subscribe(
+    this.commentService.modifyComment(idComment, content).subscribe(
       result =>
         console.log(result),
         error =>
           this.responseServer = error.error.message
     )
     this.router.navigate(['showPostComponent'])
-}
-
-onFileAdded(event: Event) {
-  const file = (event.target as HTMLInputElement).files[0];
-  this.modifyComment.get('attachment').setValue(file);
-  this.modifyComment.updateValueAndValidity();
-  const reader = new FileReader();
-  reader.onload = () => {
-    this.imagePreview = reader.result as string;
-  };
-  reader.readAsDataURL(file);
 }
 
 getProfil(){

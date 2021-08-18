@@ -25,19 +25,17 @@ export class AddPostComponent implements OnInit {
   ngOnInit(): void {
     this.getProfil()
     this.createPost = this.formBuilder.group({
-      content: this.formBuilder.control('', [Validators.required, Validators.minLength(10), Validators.maxLength(255)]),
       attachment: this.formBuilder.control('')
     })
   }
 
   // Création d'un post
   onSubmit(): void {
-      let content = this.createPost.get('content').value;
       let attachment = this.createPost.get('attachment').value;
       console.log(attachment)
-    this.postService.createMessage(content, attachment).subscribe(
+    this.postService.createMessage(attachment).subscribe(
       result =>
-        sessionStorage['message'] = JSON.stringify(result),
+      localStorage['message'] = JSON.stringify(result),
         error =>
           this.responseServer = error.error.message
     )

@@ -11,7 +11,6 @@
                 <div class="userName"><p>{{ message.users_messages.firstname }} {{ message.users_messages.name }}</p></div>
             </div>
 
-            <div class="content"><p>{{ message.content }}</p></div>
             <div class="attachment" *ngIf='message.attachment'><img class="attachment_post" [src]='message.attachment' /></div>   
         </div>
         <div class="interaction">

@@ -63,3 +63,6 @@ Rendez vous sur http://localhost:4200 pour accéder au projet.
 <code>npm install --save multer</code><br />
 <code>npm install --save helmet</code><br />
 <code>npm install --save express-rate-limit</code><br />
+<code>npm install --save password-validator</code><br />
+<code>npm install --save crypto-js</code><br />
+<code>npm install --save body-parser</code><br />

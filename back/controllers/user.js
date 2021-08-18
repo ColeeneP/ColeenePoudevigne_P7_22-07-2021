@@ -2,28 +2,45 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Model = require('../models/');
 const decodedToken = require("../middleware/auth.js");
+const CryptoJS = require("crypto-js");
+const passwordValidator = require('password-validator');
+
+let schemaPassword = new passwordValidator();
+schemaPassword
+.is().min(8)                                    // Longueur min 8
+.is().max(100)                                  // Longueur max 100
+.has().uppercase()                              // Doit contenir des majuscules
+.has().lowercase()                              // Doit contenir des minuscules
+.has().digits(1)                                // Doit contenir un chiffre
+.has().not().spaces()                           // Ne doit pas contenir d'espace
 
 // controller de création de compte
 exports.signup = (req, res, next) => {
-    bcrypt.hash(req.body.password, 10) // hash du mdp
+  const emailCryptoJs = CryptoJS.HmacSHA512(req.body.email, `${process.env.CRYPTOJS_RANDOM_SECRET_KEY}`).toString();
+  console.log(req.body.email);
+  if (schemaPassword.validate(req.body.password)) { 
+      bcrypt.hash(req.body.password, 10) // hash du mdp
       .then(hash => {
         const user = {
           firstname: req.body.firstname,
           name: req.body.name,
-          email: req.body.email,
+          email: emailCryptoJs,
           password: hash, // On récupère le hash créé et on créé un user avec ce hash
           bio: req.body.bio
         }; console.log(user);
         Model.Users.create(user) // On enregistre le user dans la BDD
           .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-          .catch(error => res.status(400).json({ error }));
+          .catch(error => res.status(400).json({ message: error.message }));
       })
       .catch(error => res.status(500).json({ message: error.message }));
-  };
+  } else {
+    return res.status(400).json({ message: 'Vérifiez le format de votre adresse mail, votre mot de passe doit contenir minimum 8 caractères dont des majuscules, des minucules et un chiffre'});
+  }};
 
 // controller de connexion à un compte existant
   exports.login = (req, res, next) => {
-    Model.Users.findOne({  where : { email: req.body.email } }) // On cherche dans la BDD le user correspondant à l'email (unique)
+    const emailCryptoJs = CryptoJS.HmacSHA512(req.body.email, `${process.env.CRYPTOJS_RANDOM_SECRET_KEY}`).toString();
+    Model.Users.findOne({  where : { email: emailCryptoJs } }) // On cherche dans la BDD le user correspondant à l'email (unique)
       .then(user => {
         console.log(user);
         if (!user) {

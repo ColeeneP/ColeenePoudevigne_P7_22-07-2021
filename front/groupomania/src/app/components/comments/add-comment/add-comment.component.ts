@@ -41,25 +41,13 @@ export class AddCommentComponent implements OnInit {
       let idMessage = window.location.href.split('addCommentComponent/')[1];
       console.log(idMessage);
       let content = this.createComment.get('content').value;
-      let attachment = this.createComment.get('attachment').value;
-    this.commentService.createComment(idMessage, content, attachment).subscribe(
+    this.commentService.createComment(idMessage, content).subscribe(
       result =>
-        sessionStorage['comment'] = JSON.stringify(result),
+      localStorage['comment'] = JSON.stringify(result),
         error =>
           this.responseServer = error.error.message
     )
     this.router.navigate(['showPostComponent'])
-}
-
-onFileAdded(event: Event) {
-  const file = (event.target as HTMLInputElement).files[0];
-  this.createComment.get('attachment').setValue(file);
-  this.createComment.updateValueAndValidity();
-  const reader = new FileReader();
-  reader.onload = () => {
-    this.imagePreview = reader.result as string;
-  };
-  reader.readAsDataURL(file);
 }
 
 getProfil(){

@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean> {
     return Observable.create(
       (observer) => {
-        this.authToken = sessionStorage.getItem('session');
+        this.authToken = localStorage.getItem('session');
         //Vérification du token de l'utilisateur soit via le cookie soit via en direct
         if (this.authToken) {
           observer.next(true);

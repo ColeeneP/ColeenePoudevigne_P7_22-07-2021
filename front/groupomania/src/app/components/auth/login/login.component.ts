@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     }
     this.userService.logUser(formOnLogin).subscribe(
       result => {
-        sessionStorage[`session`] = JSON.stringify(result),
+        localStorage[`session`] = JSON.stringify(result),
         this.isAuth$.next(true),
         this.router.navigate(['/showPostComponent'])},
         error => {

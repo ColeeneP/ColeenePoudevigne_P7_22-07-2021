@@ -9,7 +9,7 @@ export class HomeComponent implements OnInit {
 
   status: string;
   loading: boolean;
-  session = JSON.parse(sessionStorage.getItem('session'));
+  session = JSON.parse(localStorage.getItem('session'));
 
   posts: any;
   postSub: any;

@@ -16,9 +16,8 @@ export class PostService {
   constructor(private http: HttpClient) { }
 
 
-  createMessage(content: string, attachment: File):Observable<any>{
+  createMessage(attachment: File):Observable<any>{
     let formData = new FormData();  
-      formData.append('content', content);
       formData.append('attachment', attachment);
     return this.http.post(`${this.apiUrl}/message/createMessage`, formData);
   }
@@ -31,10 +30,9 @@ export class PostService {
     return this.http.get(`${this.apiUrl}/message/getOneMessage/` + id);
   }
 
-  modifyMessage(id: string, content: string, attachment: File): Observable<any>{
+  modifyMessage(id: string, attachment: File): Observable<any>{
     let formData = new FormData();  
     formData.append('idPost', id);
-    formData.append('content', content);
     formData.append('attachment', attachment);
     return this.http.put(`${this.apiUrl}/message/modifyMessage/` + id, formData);
   }

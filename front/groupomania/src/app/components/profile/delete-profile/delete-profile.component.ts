@@ -19,7 +19,7 @@ export class DeleteProfileComponent implements OnInit {
 
   onDeleteProfil(id: string) {
     this.userService.deleteProfil(id).subscribe()
-    sessionStorage.clear()
+    localStorage.clear()
     this.router.navigate(['registerComponent'])
   }
 

@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   }
 
   isAuth(){
-    if (!sessionStorage.session) {
+    if (!localStorage.session) {
       this.auth = false;
     }
     else {
@@ -25,6 +25,6 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout(): void {
-    sessionStorage.clear()
+    localStorage.clear()
   }
 }

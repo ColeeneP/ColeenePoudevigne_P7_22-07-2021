@@ -6,8 +6,8 @@ export class AuthInterceptor implements HttpInterceptor {
   newRequest: HttpRequest<any>;
   intercept(req: HttpRequest<any>, next: HttpHandler): any {
     let authToken = null;
-    if (JSON.parse(sessionStorage.getItem('session'))){
-      authToken = JSON.parse(sessionStorage.getItem('session')).token;
+    if (JSON.parse(localStorage.getItem('session'))){
+      authToken = JSON.parse(localStorage.getItem('session')).token;
       this.newRequest = req.clone({
       withCredentials: false ,
       headers: req.headers.set('authorization', 'Bearer ' + authToken)
