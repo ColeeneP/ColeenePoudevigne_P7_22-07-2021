@@ -1,12 +1,14 @@
 <app-header></app-header>
+<main>
 <form id="form" [formGroup]="loginForm">
     <div class="formGroup">
         <label for='email'>Adresse mail</label>
-        <input id='email' type='email' name='mail' class='form-control' formControlName="email" required>
+        <input id='email' type='email' name='mail' class='form-control' formControlName="email" required><br />
     </div>
     <div class="formGroup">
         <label for='password'>Mot de passe</label>
-        <input id='password' type='password' name='password' class='form-control' formControlName="password" required>
+        <input id='password' type='password' name='password' class='form-control' formControlName="password" required><br />
     </div>
         <button id='submit' type="submit" (click)="onLogin()">Se connecter</button>
 </form>
+</main>

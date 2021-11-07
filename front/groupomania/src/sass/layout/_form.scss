@@ -1,8 +1,9 @@
 form {
-    width: 100%;
+    width: 50%;
+    margin: 100px auto 0px auto;
+    color: white;
 
     .form-control {
-        margin-bottom: 20px;
         display: flex;
         flex-flow: row wrap; 
         justify-content: space-evenly;

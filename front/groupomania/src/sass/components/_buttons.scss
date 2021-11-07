@@ -5,8 +5,9 @@ button {
     border-radius: 20px;
     margin-top: 10px;
     background-color: $second_color;
+    padding: 0;
 
     &:hover {
-        background-color: $font_color;
+        background-color: $first_color;
     }
 }  
